@@ -7,7 +7,7 @@ export default function CloseIcon ({ fill = "white", height = 16, width = 16}) {
       enableBackground="new 0 0 386.667 386.667"
       height={height}
       viewBox="0 0 386.667 386.667"
-      width={height}
+      width={width}
       fill={fill}
       xmlns="http://www.w3.org/2000/svg"
     >

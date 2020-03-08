@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Rnd } from "react-rnd";
-import { useStore, useWindowSize, usePrevious } from "./hooks";
+import { useStore, useWindowSize } from "./hooks";
 import { ToolbarPositions } from "./types";
 
 import AlignRightIcon from "./Icons/AlignRightIcon";

@@ -50,7 +50,9 @@ export default function SWRDevtools({
   }, [selectedCacheKey]);
   useEffect(() => toggleShow(true), []);
   useEffect(() => cache.subscribe(handleSetCacheKey), [handleSetCacheKey]);
-
+  useEffect(() =>  {
+    setCacheKeys(cache.keys())
+  }, [])
   const handleSelectedCacheItem = (key: string) => {
     setSelectedCacheKey(key);
     setSelectedCacheItemData(cache.get(key));
@@ -100,7 +102,7 @@ export default function SWRDevtools({
         setToolbarPosition={setToolbarPosition}
         toggleShow={handleToggleShow}
       >
-        {({ isDragging, theme }) => (
+        {({ theme }) => (
           <div style={{ display: "flex" }}>
             <div style={{ width: "40%" }}>
               <Keys
