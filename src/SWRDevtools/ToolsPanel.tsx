@@ -13,13 +13,22 @@ interface ToolsPanelProps {
   toolbarPosition: string;
   previousToolbarPosition: string;
   show: boolean;
-  children: ({ isDragging: boolean, theme: string }) => React.ReactNode;
+  children: ({ isDragging, theme }: { isDragging: boolean, theme: string}) => React.ReactNode;
   setToolbarPosition: (position: ToolbarPositions) => void;
   toggleShow: () => void;
   debug?: boolean;
 }
 
-const themes = {
+interface Themes {
+  [key: string]: {
+    container: {
+      backgroundImage?: string
+      backgroundColor?: string
+    }
+  }
+}
+
+const themes: Themes = {
   Dark: {
     container: {
       backgroundImage: "linear-gradient(90deg,#0f2027,#203a43,#2c5364)"

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { openDB } from "idb";
 
 export function useStore({ store = "default-db" }) {
-  const [db, setDb] = useState(null);
+  const [db, setDb] = useState<any>(null);
   useEffect(() => {
     openDB(store, 1, {
       upgrade(db) {
@@ -101,7 +101,7 @@ export function throttle<T extends (...args: any[]) => void>(
   } as T;
 }
 
-export function usePrevious(value) {
+export function usePrevious(value: any) {
   const ref = useRef();
   useEffect(() => {
     ref.current = value;

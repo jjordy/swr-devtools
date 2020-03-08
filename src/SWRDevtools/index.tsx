@@ -98,7 +98,7 @@ export default function SWRDevtools({
         show={show}
         debug={debug}
         toolbarPosition={toolbarPosition}
-        previousToolbarPosition={prevPosition}
+        previousToolbarPosition={prevPosition || ""}
         setToolbarPosition={setToolbarPosition}
         toggleShow={handleToggleShow}
       >
