@@ -9,4 +9,4 @@ esm
 .idea
 examples/**/yarn.lock
 package-lock.json
-.rts2_cache_cjs
+.rts2_cache_cjs/**
