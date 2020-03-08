@@ -10,9 +10,34 @@ function filterErrors(keys: string[]) {
 
 type ToolbarPositions = "right" | "left" | "bottom";
 
-export default function SWRDevtools({ children, debug = false }: any) {
+interface SWRDevtoolsProps {
+  children: React.ReactNode;
+  CustomOpenComponent?: React.ReactNode;
+  debug?: boolean;
+}
+
+const DefaultOpenComponent = (
+  <span
+    role="img"
+    aria-label="Open Devtools"
+    style={{
+      fontSize: 32
+    }}
+  >
+    👨‍💻
+  </span>
+);
+
+export default function SWRDevtools({
+  children,
+  debug = false,
+  CustomOpenComponent
+}: SWRDevtoolsProps) {
   const [show, toggleShow] = useState(false);
-  const [toolbarPosition, setToolbarPosition] = useState<ToolbarPositions>("right");
+  const [toolbarPosition, setToolbarPosition] = useState<ToolbarPositions>(
+    "right"
+  );
+  console.log(CustomOpenComponent)
   const [cacheKeys, setCacheKeys] = useState(filterErrors(cache.keys()));
   const [selectedCacheItemData, setSelectedCacheItemData] = useState(null);
   const [selectedCacheKey, setSelectedCacheKey] = useState<string | null>(null);
@@ -50,7 +75,12 @@ export default function SWRDevtools({ children, debug = false }: any) {
             zIndex: 9999
           }}
         >
-          <div style={{ paddingRight: "1rem", paddingBottom: "1rem" }}>
+          <div
+            style={{
+              paddingRight: "1rem",
+              paddingBottom: "1rem"
+            }}
+          >
             <button
               title="Open SWR Devtools"
               onClick={handleToggleShow}
@@ -61,15 +91,7 @@ export default function SWRDevtools({ children, debug = false }: any) {
                 padding: 0
               }}
             >
-              <span
-                role="img"
-                aria-label="Open Devtools"
-                style={{
-                  fontSize: 32
-                }}
-              >
-                👨‍💻
-              </span>
+            {CustomOpenComponent || DefaultOpenComponent}
             </button>
           </div>
         </div>
