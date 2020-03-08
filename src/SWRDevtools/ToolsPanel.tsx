@@ -165,7 +165,6 @@ export default function ToolsPanel({
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                // padding: "1rem",
                 paddingTop: "1rem",
                 paddingBottom: "1rem",
                 paddingLeft: "1rem",
@@ -190,6 +189,7 @@ export default function ToolsPanel({
                   onClick={() => setToolbarPosition("bottom")}
                   style={{
                     border: 0,
+                    padding: "0.5rem",
                     backgroundColor: "transparent"
                   }}
                 >
@@ -204,6 +204,7 @@ export default function ToolsPanel({
                   }}
                   style={{
                     border: 0,
+                    padding: "0.5rem",
                     backgroundColor: "transparent"
                   }}
                 >
@@ -218,6 +219,7 @@ export default function ToolsPanel({
                   }}
                   style={{
                     border: 0,
+                    padding: "0.5rem",
                     backgroundColor: "transparent"
                   }}
                 >
@@ -230,6 +232,7 @@ export default function ToolsPanel({
                   onClick={toggleShow}
                   style={{
                     border: 0,
+                    padding: "0.5rem",
                     backgroundColor: "transparent"
                   }}
                 >

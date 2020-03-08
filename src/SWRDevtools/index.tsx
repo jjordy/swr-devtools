@@ -3,7 +3,7 @@ import { mutate, CacheInterface } from "swr";
 import Data from "./Data";
 import Keys from "./Keys";
 import ToolsPanel from "./ToolsPanel";
-import { ToolbarPositions } from './types';
+import { ToolbarPositions } from "./types";
 import { usePrevious } from "./hooks";
 
 function filterErrors(keys: string[]) {
@@ -14,7 +14,8 @@ interface SWRDevtoolsProps {
   children: React.ReactNode;
   CustomOpenComponent?: React.ReactNode;
   debug?: boolean;
-  cache: CacheInterface
+  cache: CacheInterface;
+  position?: ToolbarPositions
 }
 
 const DefaultOpenComponent = (
@@ -33,28 +34,27 @@ export default function SWRDevtools({
   children,
   debug = false,
   cache,
+  position = "right",
   CustomOpenComponent
 }: SWRDevtoolsProps) {
   const [show, toggleShow] = useState(false);
-  const [toolbarPosition, setToolbarPosition] = useState<ToolbarPositions>(
-    "right"
-  );
+  const [toolbarPosition, setToolbarPosition] = useState<ToolbarPositions>(position);
   const prevPosition = usePrevious(toolbarPosition);
   const [cacheKeys, setCacheKeys] = useState(filterErrors(cache.keys()));
   const [selectedCacheItemData, setSelectedCacheItemData] = useState(null);
   const [selectedCacheKey, setSelectedCacheKey] = useState<string | null>(null);
   const handleToggleShow = () => toggleShow(!show);
+
   const handleSetCacheKey = useCallback(() => {
     setCacheKeys(filterErrors(cache.keys()));
     if (selectedCacheKey) {
       setSelectedCacheItemData(cache.get(selectedCacheKey));
     }
   }, [selectedCacheKey]);
+
   useEffect(() => toggleShow(true), []);
   useEffect(() => cache.subscribe(handleSetCacheKey), [handleSetCacheKey]);
-  useEffect(() =>  {
-    setCacheKeys(cache.keys())
-  }, [])
+
   const handleSelectedCacheItem = (key: string) => {
     setSelectedCacheKey(key);
     setSelectedCacheItemData(cache.get(key));
