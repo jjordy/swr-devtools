@@ -3,12 +3,12 @@ import { cache, mutate } from "swr";
 import Data from "./Data";
 import Keys from "./Keys";
 import ToolsPanel from "./ToolsPanel";
+import { ToolbarPositions } from './types';
+import { usePrevious } from "./hooks";
 
 function filterErrors(keys: string[]) {
   return keys.filter(key => !key.includes("err@"));
 }
-
-type ToolbarPositions = "right" | "left" | "bottom";
 
 interface SWRDevtoolsProps {
   children: React.ReactNode;
@@ -37,7 +37,7 @@ export default function SWRDevtools({
   const [toolbarPosition, setToolbarPosition] = useState<ToolbarPositions>(
     "right"
   );
-  console.log(CustomOpenComponent)
+  const prevPosition = usePrevious(toolbarPosition);
   const [cacheKeys, setCacheKeys] = useState(filterErrors(cache.keys()));
   const [selectedCacheItemData, setSelectedCacheItemData] = useState(null);
   const [selectedCacheKey, setSelectedCacheKey] = useState<string | null>(null);
@@ -48,6 +48,7 @@ export default function SWRDevtools({
       setSelectedCacheItemData(cache.get(selectedCacheKey));
     }
   }, [selectedCacheKey]);
+  useEffect(() => toggleShow(true), []);
   useEffect(() => cache.subscribe(handleSetCacheKey), [handleSetCacheKey]);
 
   const handleSelectedCacheItem = (key: string) => {
@@ -72,15 +73,10 @@ export default function SWRDevtools({
             boxSizing: "border-box",
             bottom: 0,
             left: 0,
-            zIndex: 9999
+            zIndex: 999999
           }}
         >
-          <div
-            style={{
-              paddingRight: "1rem",
-              paddingBottom: "1rem"
-            }}
-          >
+          <div style={{ paddingRight: "1rem", paddingBottom: "1rem" }}>
             <button
               title="Open SWR Devtools"
               onClick={handleToggleShow}
@@ -91,7 +87,7 @@ export default function SWRDevtools({
                 padding: 0
               }}
             >
-            {CustomOpenComponent || DefaultOpenComponent}
+              {CustomOpenComponent || DefaultOpenComponent}
             </button>
           </div>
         </div>
@@ -100,10 +96,11 @@ export default function SWRDevtools({
         show={show}
         debug={debug}
         toolbarPosition={toolbarPosition}
+        previousToolbarPosition={prevPosition}
         setToolbarPosition={setToolbarPosition}
         toggleShow={handleToggleShow}
       >
-        {({ isDragging }) => (
+        {({ isDragging, theme }) => (
           <div style={{ display: "flex" }}>
             <div style={{ width: "40%" }}>
               <Keys
@@ -116,7 +113,8 @@ export default function SWRDevtools({
             </div>
             <div style={{ width: "60%" }}>
               <Data
-                data={!isDragging ? selectedCacheItemData : {}}
+                theme={theme}
+                data={selectedCacheItemData}
                 cacheKey={selectedCacheKey}
                 toolbarPosition={toolbarPosition}
               />

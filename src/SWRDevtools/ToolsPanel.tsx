@@ -1,24 +1,54 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { Rnd } from "react-rnd";
+import { useStore, useWindowSize, usePrevious } from "./hooks";
+import { ToolbarPositions } from "./types";
+
 import AlignRightIcon from "./Icons/AlignRightIcon";
 import AlignLeftIcon from "./Icons/AlignLeftIcon";
 import AlignBottomIcon from "./Icons/AlignBottomIcon";
-import useWindowSize from "./useWindowSize";
-import { Rnd } from "react-rnd";
+import GithubIcon from "./Icons/GithubIcon";
+import CloseIcon from "./Icons/CloseIcon";
+
+interface ToolsPanelProps {
+  toolbarPosition: string;
+  previousToolbarPosition: string;
+  show: boolean;
+  children: ({ isDragging: boolean, theme: string }) => React.ReactNode;
+  setToolbarPosition: (position: ToolbarPositions) => void;
+  toggleShow: () => void;
+  debug?: boolean;
+}
+
+const themes = {
+  Dark: {
+    container: {
+      backgroundImage: "linear-gradient(90deg,#0f2027,#203a43,#2c5364)"
+    }
+  },
+  Light: {
+    container: {
+      backgroundImage: "linear-gradient(120deg,#a6c0fe,#f68084)"
+    }
+  }
+};
 
 export default function ToolsPanel({
   toolbarPosition,
+  previousToolbarPosition,
   show,
   children,
   setToolbarPosition,
   toggleShow,
   debug
-}: any) {
+}: ToolsPanelProps) {
+  const [theme, setTheme] = useState("Dark");
   const [isDragging, setIsDragging] = useState(false);
+  const { get, set } = useStore({ store: "SWRDevtools" });
   const { width, height } = useWindowSize();
-  if (debug) {
-    console.log(`Width: ${width}, Height: ${height}`);
-  }
-  const [size, setSize] = useState<{ width: number; height: number | string }>({
+  const [size, setSize] = useState<{
+    width: number;
+    height: number;
+  }>({
     width: 400,
     height: height
   });
@@ -26,33 +56,65 @@ export default function ToolsPanel({
     x: 0,
     y: 0
   });
-  
   const handleResize = useCallback(
     //@ts-ignore
     (e: any, direction: any, ref: any, delta: any, position: any) => {
-      setSize({ width: ref.style.width, height: ref.style.height });
+      setSize({
+        width: ref.offsetWidth,
+        height: ref.offsetHeight
+      });
       setPosition({ x: position.x, y: position.y });
       setIsDragging(false);
       if (debug) {
+        console.log(direction, delta, position);
         console.log(
-          `Size - Width: ${ref.style.width}, Height: ${ref.style.height}`
+          `Size - Width: ${ref.offsetWidth}, Height: ${ref.offsetHeight}`
         );
         console.log(`Position - x: ${position.x}, y: ${position.y}`);
       }
     },
     []
   );
+  const handleChangeTheme = useCallback(
+    async theme => {
+      await set("theme", theme);
+      setTheme(theme);
+    },
+    [set]
+  );
+  useEffect(() => {
+    get("theme").then(theme => {
+      if (theme) {
+        setTheme(theme);
+      }
+    });
+  });
+
   useEffect(() => {
     if (toolbarPosition === "right") {
       setSize({ height, width: 400 });
-      setPosition({ x: width - 400, y: 0 });
+      if (previousToolbarPosition === "bottom") {
+        setPosition({
+          x: width - 400,
+          y: position.y - height + size.height
+        });
+      } else {
+        setPosition({ x: width - 400, y: position.y });
+      }
     }
     if (toolbarPosition === "left") {
       setSize({ height, width: 400 });
-      setPosition({ x: 0, y: 0 });
+      if (previousToolbarPosition === "bottom") {
+        setPosition({
+          x: 0,
+          y: position.y - height + size.height
+        });
+      } else {
+        setPosition({ x: 0, y: position.y });
+      }
     }
     if (toolbarPosition === "bottom") {
-      setPosition({ x: 0, y: height - 300 });
+      setPosition({ x: 0, y: position.y + (height - 300) });
       setSize({ width: width, height: 300 });
     }
   }, [toolbarPosition, width, height]);
@@ -75,27 +137,39 @@ export default function ToolsPanel({
           }}
           dragAxis="both"
           disableDragging
-          bounds="body"
-          style={{ cursor: "auto", position: "fixed" }}
+          bounds="parent"
+          style={{
+            cursor: "auto",
+            position: "fixed",
+            zIndex: 999999
+          }}
         >
           <div
             style={{
               position: "relative",
               color: "#FFF",
               height: "100%",
-              backgroundImage: "linear-gradient(90deg,#0f2027,#203a43,#2c5364)"
+              ...themes[theme].container
             }}
           >
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                padding: "1rem",
+                // padding: "1rem",
+                paddingTop: "1rem",
+                paddingBottom: "1rem",
+                paddingLeft: "1rem",
+                paddingRight: "2rem",
                 alignItems: "center"
               }}
             >
               <span
-                style={{ fontSize: 16, fontWeight: 900, userSelect: "none" }}
+                style={{
+                  fontSize: 16,
+                  fontWeight: 900,
+                  userSelect: "none"
+                }}
               >
                 SWR Devtools
               </span>
@@ -150,13 +224,49 @@ export default function ToolsPanel({
                     backgroundColor: "transparent"
                   }}
                 >
-                  <span role="img" aria-label="Close">
-                    ❌
-                  </span>
+                  <CloseIcon />
                 </button>
               </div>
             </div>
-            {children({ isDragging })}
+            {children({ isDragging, theme })}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingRight: "2rem",
+                paddingLeft: "2rem",
+                boxSizing: "border-box"
+              }}
+            >
+              <a
+                target="_blank"
+                href="https://github.com/jjordy/swr-devtools"
+                aria-label="Check us out on Github"
+              >
+                <GithubIcon />
+              </a>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <label htmlFor="select_theme" style={{ marginRight: "1rem" }}>
+                  Select Theme
+                </label>
+                <select
+                  value={theme}
+                  style={{
+                    padding: "0.2rem",
+                    border: "1px solid #e7e7e7",
+                    borderRadius: 4
+                  }}
+                  onChange={evt => handleChangeTheme(evt.target.value)}
+                >
+                  {Object.keys(themes).map(key => (
+                    <option key={`select_theme_option_${key}`} value={key}>
+                      {key}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
           </div>
         </Rnd>
       )}

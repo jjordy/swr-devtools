@@ -1,9 +1,49 @@
-import React from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { openDB } from "idb";
+
+export function useStore({ store = "default-db" }) {
+  const [db, setDb] = useState(null);
+  useEffect(() => {
+    openDB(store, 1, {
+      upgrade(db) {
+        db.createObjectStore("settings");
+      }
+    }).then(db => setDb(db));
+  }, []);
+
+  const get = useCallback(async key => {
+    if (db !== null) {
+      try {
+        return (await db).get("settings", key);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    return null;
+  }, []);
+  const set = useCallback(
+    async (key, values) => {
+      if (db !== null) {
+        try {
+          return (await db).put("settings", values, key);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      return null;
+    },
+    [db]
+  );
+  return {
+    set,
+    get
+  };
+}
 
 const events = new Set<() => void>();
 const onResize = () => events.forEach(fn => fn());
 
-const useWindowSize = (options: { throttleMs?: number } = {}) => {
+export function useWindowSize (options: { throttleMs?: number } = {}) {
   const { throttleMs = 100 } = options;
   const [size, setSize] = React.useState({
     width: typeof window !== "undefined" ? window.innerWidth : 0,
@@ -61,4 +101,10 @@ export function throttle<T extends (...args: any[]) => void>(
   } as T;
 }
 
-export default useWindowSize;
+export function usePrevious(value) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}

@@ -51,12 +51,13 @@ export default function Keys({
             <div
               style={{
                 display: "flex",
-                justifyContent: "flex-end",
+                justifyContent: "flex-start",
                 marginTop: "0.5rem",
                 alignItems: "center"
               }}
             >
               <button
+                title="Clear Item"
                 onClick={() => onClear(cacheKey)}
                 style={{
                   border: 0,
@@ -65,7 +66,7 @@ export default function Keys({
                   fontWeight: "bolder",
                   fontSize: 12,
                   borderRadius: 6,
-                  padding: "0.5rem",
+                  padding: "0.2rem",
                   cursor: "pointer",
                   marginRight: "0.5rem",
                   textTransform: "uppercase"
@@ -74,6 +75,7 @@ export default function Keys({
                 <CloseIcon />
               </button>
               <button
+                title="Revalidate"
                 onClick={() => onRevalidate(cacheKey)}
                 style={{
                   border: 0,
@@ -83,7 +85,7 @@ export default function Keys({
                   fontSize: 12,
                   borderRadius: 6,
                   cursor: "pointer",
-                  padding: "0.5rem",
+                  padding: "0.2rem",
                   textTransform: "uppercase"
                 }}
               >

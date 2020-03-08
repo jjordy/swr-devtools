@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, memo } from "react";
 
-export default function Data({ data, toolbarPosition }: any) {
+export default memo(function Data({ data, toolbarPosition, theme = "tube" }: any) {
   //@ts-ignore
   let ReactJson = useRef((props: any) => <></>);
   useEffect(() => {
@@ -33,9 +33,9 @@ export default function Data({ data, toolbarPosition }: any) {
           displayDataTypes={false}
           indentWidth={2}
           src={data || {}}
-          theme="tube"
+          theme={theme === "Dark" ? "tube" : "shapeshifter:inverted"}
         />
       </div>
     </div>
   );
-}
+})
