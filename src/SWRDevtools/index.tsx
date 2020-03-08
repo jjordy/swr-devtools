@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { cache, mutate } from "swr";
+import { mutate, CacheInterface } from "swr";
 import Data from "./Data";
 import Keys from "./Keys";
 import ToolsPanel from "./ToolsPanel";
@@ -14,6 +14,7 @@ interface SWRDevtoolsProps {
   children: React.ReactNode;
   CustomOpenComponent?: React.ReactNode;
   debug?: boolean;
+  cache: CacheInterface
 }
 
 const DefaultOpenComponent = (
@@ -31,6 +32,7 @@ const DefaultOpenComponent = (
 export default function SWRDevtools({
   children,
   debug = false,
+  cache,
   CustomOpenComponent
 }: SWRDevtoolsProps) {
   const [show, toggleShow] = useState(false);
