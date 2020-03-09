@@ -98,7 +98,10 @@ export default function ToolsPanel({
       }
     });
   }, []);
-
+  useEffect(() => {
+    const pos = document.body.getBoundingClientRect();
+    setPosition({ x: 0, y: pos.bottom })
+  }, [show])
   useEffect(() => {
     if (toolbarPosition === "right") {
       setSize({ height, width: 400 });
@@ -126,7 +129,7 @@ export default function ToolsPanel({
       setPosition({ x: 0, y: position.y + (height - 300) });
       setSize({ width: width, height: 300 });
     }
-  }, [toolbarPosition, width, height, show]);
+  }, [toolbarPosition, width, height]);
   return (
     <>
       {show && (
