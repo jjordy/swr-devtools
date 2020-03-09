@@ -9,7 +9,7 @@ export default memo(function Data({ data, toolbarPosition, theme = "tube" }: any
   const getStyles = () => {
     if (toolbarPosition === "right" || toolbarPosition === "left") {
       return {
-        height: "90vh"
+        height: "87vh"
       }
     }
     if (toolbarPosition === "bottom") {

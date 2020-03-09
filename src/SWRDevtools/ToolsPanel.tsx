@@ -267,6 +267,8 @@ export default function ToolsPanel({
                   style={{
                     padding: "0.2rem",
                     border: "1px solid #e7e7e7",
+                    color: theme === "Dark" ? "#fff" : "#000",
+                    backgroundColor: theme === "Dark" ? "#555555cc" : "fff",
                     borderRadius: 4
                   }}
                   onChange={evt => handleChangeTheme(evt.target.value)}
