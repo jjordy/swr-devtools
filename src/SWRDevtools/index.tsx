@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Data from "./Data";
 import Keys from "./Keys";
 import ToolsPanel from "./ToolsPanel";
@@ -30,6 +30,8 @@ export default function SWRDevtools({
   CustomOpenComponent
 }: SWRDevtoolsProps) {
   const [show, toggleShow] = useState(false);
+  //@ts-ignore
+  const ReactJson = useRef((props: any) => <></>);
   const [toolbarPosition, setToolbarPosition] = useState<ToolbarPositions>(
     position
   );
@@ -60,7 +62,6 @@ export default function SWRDevtools({
   const revalidate = (key: string) => {
     mutate(key);
   };
-
   return (
     <>
       {!show && (
@@ -114,6 +115,7 @@ export default function SWRDevtools({
                 theme={theme}
                 data={selectedCacheItemData}
                 cacheKey={selectedCacheKey}
+                JsonViewer={ReactJson}
                 toolbarPosition={toolbarPosition}
               />
             </div>

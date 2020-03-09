@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, memo } from "react";
+import React, { useEffect, memo } from "react";
 
-export default memo(function Data({ data, toolbarPosition, theme = "tube" }: any) {
-  //@ts-ignore
-  let ReactJson = useRef((props: any) => <></>);
+export default memo(function Data({ JsonViewer, data, toolbarPosition, theme = "tube" }: any) {
+
   useEffect(() => {
-    ReactJson.current = require('react-json-view').default;
+    JsonViewer.current = require("react-json-view").default;
   }, [])
   const getStyles = () => {
     if (toolbarPosition === "right" || toolbarPosition === "left") {
@@ -28,7 +27,7 @@ export default memo(function Data({ data, toolbarPosition, theme = "tube" }: any
           ...getStyles()
         }}
       >
-        <ReactJson.current
+        <JsonViewer.current
           collapsed={1}
           displayDataTypes={false}
           indentWidth={2}
