@@ -52,7 +52,6 @@ export default function SWRDevtools({
     }
   }, [selectedCacheKey]);
 
-  useEffect(() => toggleShow(true), []);
   useEffect(() => cache.subscribe(handleSetCacheKey), [handleSetCacheKey]);
 
   const handleSelectedCacheItem = (key: string) => {
