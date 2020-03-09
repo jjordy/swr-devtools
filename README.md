@@ -16,7 +16,7 @@ Devtools for [swr](https://swr.now.sh/)
 * [License](#license)
 
 ## Screenshot
-![Screenshot demo](https://raw.githubusercontent.com/jjordy/swr-devtools/master/swr-devtools.gif)
+![swr-devtools](https://user-images.githubusercontent.com/2831940/76174150-86dd3a00-6173-11ea-84c2-72b557d4292d.gif)
 
 ## Live Demo
  [Code Sandbox](https://codesandbox.io/s/swr-devtools-o9juu)
