@@ -1,23 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { CacheInterface } from "swr";
 import Data from "./Data";
 import Keys from "./Keys";
 import ToolsPanel from "./ToolsPanel";
-import { ToolbarPositions } from "./types";
+import { ToolbarPositions, SWRDevtoolsProps } from "./types";
 import { usePrevious } from "./hooks";
-import { mutateInterface } from "swr/dist/types";
 
 function filterErrors(keys: string[]) {
   return keys.filter(key => !key.includes("err@"));
-}
-
-interface SWRDevtoolsProps {
-  children: React.ReactNode;
-  CustomOpenComponent?: React.ReactNode;
-  debug?: boolean;
-  cache: CacheInterface;
-  mutate: mutateInterface;
-  position?: ToolbarPositions
 }
 
 const DefaultOpenComponent = (
@@ -41,7 +30,9 @@ export default function SWRDevtools({
   CustomOpenComponent
 }: SWRDevtoolsProps) {
   const [show, toggleShow] = useState(false);
-  const [toolbarPosition, setToolbarPosition] = useState<ToolbarPositions>(position);
+  const [toolbarPosition, setToolbarPosition] = useState<ToolbarPositions>(
+    position
+  );
   const prevPosition = usePrevious(toolbarPosition);
   const [cacheKeys, setCacheKeys] = useState(filterErrors(cache.keys()));
   const [selectedCacheItemData, setSelectedCacheItemData] = useState(null);
@@ -79,10 +70,11 @@ export default function SWRDevtools({
             boxSizing: "border-box",
             bottom: 0,
             left: 0,
+            padding: "1rem",
             zIndex: 999999
           }}
         >
-          <div style={{ paddingRight: "1rem", paddingBottom: "1rem" }}>
+          <div>
             <button
               title="Open SWR Devtools"
               onClick={handleToggleShow}

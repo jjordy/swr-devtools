@@ -97,7 +97,7 @@ export default function ToolsPanel({
         setTheme(theme);
       }
     });
-  });
+  }, []);
 
   useEffect(() => {
     if (toolbarPosition === "right") {
@@ -126,7 +126,7 @@ export default function ToolsPanel({
       setPosition({ x: 0, y: position.y + (height - 300) });
       setSize({ width: width, height: 300 });
     }
-  }, [toolbarPosition, width, height]);
+  }, [toolbarPosition, width, height, show]);
   return (
     <>
       {show && (
