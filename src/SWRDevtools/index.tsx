@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { mutate, CacheInterface } from "swr";
+import { CacheInterface } from "swr";
 import Data from "./Data";
 import Keys from "./Keys";
 import ToolsPanel from "./ToolsPanel";
 import { ToolbarPositions } from "./types";
 import { usePrevious } from "./hooks";
+import { mutateInterface } from "swr/dist/types";
 
 function filterErrors(keys: string[]) {
   return keys.filter(key => !key.includes("err@"));
@@ -15,6 +16,7 @@ interface SWRDevtoolsProps {
   CustomOpenComponent?: React.ReactNode;
   debug?: boolean;
   cache: CacheInterface;
+  mutate: mutateInterface;
   position?: ToolbarPositions
 }
 
@@ -35,6 +37,7 @@ export default function SWRDevtools({
   debug = false,
   cache,
   position = "right",
+  mutate,
   CustomOpenComponent
 }: SWRDevtoolsProps) {
   const [show, toggleShow] = useState(false);
