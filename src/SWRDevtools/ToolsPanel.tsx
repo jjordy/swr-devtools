@@ -13,7 +13,13 @@ interface ToolsPanelProps {
   toolbarPosition: string;
   previousToolbarPosition: string;
   show: boolean;
-  children: ({ isDragging, theme }: { isDragging: boolean, theme: string}) => React.ReactNode;
+  children: ({
+    isDragging,
+    theme
+  }: {
+    isDragging: boolean;
+    theme: string;
+  }) => React.ReactNode;
   setToolbarPosition: (position: ToolbarPositions) => void;
   toggleShow: () => void;
   debug?: boolean;
@@ -22,10 +28,10 @@ interface ToolsPanelProps {
 interface Themes {
   [key: string]: {
     container: {
-      backgroundImage?: string
-      backgroundColor?: string
-    }
-  }
+      backgroundImage?: string;
+      backgroundColor?: string;
+    };
+  };
 }
 
 const themes: Themes = {
@@ -99,9 +105,16 @@ export default function ToolsPanel({
     });
   }, []);
   useEffect(() => {
-    const pos = document.body.getBoundingClientRect();
-    setPosition({ x: 0, y: pos.y })
-  }, [show])
+    if (toolbarPosition === "right") {
+      setPosition({ x: width - 400, y: window.scrollY });
+    }
+    if (toolbarPosition === "left") {
+      setPosition({ x: 0, y: window.scrollY });
+    }
+    if (toolbarPosition === "bottom") {
+      setPosition({ x: 0, y: window.scrollY + (height - 300) });
+    }
+  }, [show]);
   useEffect(() => {
     if (toolbarPosition === "right") {
       setSize({ height, width: 400 });

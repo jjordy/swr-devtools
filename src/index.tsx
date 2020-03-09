@@ -1,7 +1,7 @@
 import React from 'react';
 import { SWRDevtoolsProps } from './SWRDevtools/types'
 
-export default function SWRDevtools ({ children, cache,...rest }: SWRDevtoolsProps) {
+export default function SWRDevtools ({ children, cache, ...rest }: SWRDevtoolsProps) {
   if (process.env.NODE_ENV === "development") {
     const Devtools = require("./SWRDevtools").default;
     return <Devtools cache={cache} {...rest}>{children}</Devtools>;
