@@ -36,21 +36,36 @@ npm install @jjordy/swr-devtools
 yarn add @jjordy/swr-devtools
 ```
 
-#### Initialize dev tools.
+#### Usage
+
+Import the devtools component and pass it your instance of the swr cache and mutate function.
+Dont worry about production if your ```NODE_ENV``` is not equal to development we will return an empty react fragment so nothing will be imported or rendered but your children.
 
 ```javascript
   import SWRDevtools from '@jjordy/swr-devtools'
-  import { cache } from 'swr'
+  import { cache, mutate } from 'swr'
   function MyApp () {
     return (
       <>
-        <SWRDevtools cache={cache}>
+        <SWRDevtools cache={cache} mutate={mutate}>
           <App />
         </SWRDevtools>
       </>
     )
   }
 ```
+
+#### Props 
+
+
+| Name  | Type  | Required   |
+|---|---|---|
+| cache  | `cacheInterface`  | yes |
+| children  | `React.ReactNode`   | yes  |
+| CustomOpenComponent  | `React.ReactNode`  |  no |
+| debug | `boolean` | no |
+| mutate   | `mutateInterface`  | yes  |
+| position | `string`: `"right" | "left" | "bottom"` | no
 
 ## Maintainers
 

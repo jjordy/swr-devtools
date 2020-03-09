@@ -99,6 +99,7 @@ export default function ToolsPanel({
   );
   useEffect(() => {
     get("theme").then(theme => {
+      console.log(theme);
       if (theme) {
         setTheme(theme);
       }
