@@ -36,6 +36,10 @@ yarn add @jjordy/swr-devtools
 
 #### Usage
 
+**WARNING THIS LIBRARY IS IN ITS INFANCY AND WILL HAVE LOTS OF BUGS**
+
+**``swr - 0.2.0-beta.0`` is required at minimum because it makes the cache available.**
+
 Import the devtools component and pass it your instance of the swr cache and mutate function.
 Dont worry about production if your ```NODE_ENV``` is not equal to development we will return an empty react fragment so nothing will be imported or rendered but your children.
 
