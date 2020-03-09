@@ -58,14 +58,14 @@ Dont worry about production if your ```NODE_ENV``` is not equal to development w
 #### Props 
 
 
-| Name  | Type  | Required   |
-|---|---|---|
-| cache  | `cacheInterface`  | yes |
+| Name  | Type  | Required  | Default |
+|---|---|---|---|
+| cache  | `cacheInterface`  | yes | 
 | children  | `React.ReactNode`   | yes  |
 | CustomOpenComponent  | `React.ReactNode`  |  no |
 | debug | `boolean` | no |
 | mutate   | `mutateInterface`  | yes  |
-| position | `string`: `"right" | "left" | "bottom"` | no
+| position | `string`: `"right","left","bottom"` | no | right
 
 ## Maintainers
 
