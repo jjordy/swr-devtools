@@ -100,7 +100,7 @@ export default function ToolsPanel({
   }, []);
   useEffect(() => {
     const pos = document.body.getBoundingClientRect();
-    setPosition({ x: 0, y: pos.bottom })
+    setPosition({ x: 0, y: pos.y })
   }, [show])
   useEffect(() => {
     if (toolbarPosition === "right") {
