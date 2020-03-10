@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import Data from "./Data";
 import Keys from "./Keys";
-import ToolsPanel from "./ToolsPanel";
+import Panel from "./Panel";
 import { ToolbarPositions, SWRDevtoolsProps } from "./types";
 import { usePrevious } from "./hooks";
 
@@ -21,13 +21,15 @@ const DefaultOpenComponent = (
   </span>
 );
 
-export default function SWRDevtools({
+export function SWRDevtools({
   children,
   debug = false,
   cache,
   position = "right",
   mutate,
-  CustomOpenComponent
+  CustomOpenComponent,
+  openBtnPosition = "left",
+  defaultOpen = false
 }: SWRDevtoolsProps) {
   const [show, toggleShow] = useState(false);
   //@ts-ignore
@@ -47,6 +49,8 @@ export default function SWRDevtools({
       setSelectedCacheItemData(cache.get(selectedCacheKey));
     }
   }, [selectedCacheKey]);
+
+  useEffect(() => toggleShow(defaultOpen), [defaultOpen]);
 
   useEffect(() => cache.subscribe(handleSetCacheKey), [handleSetCacheKey]);
 
@@ -70,7 +74,8 @@ export default function SWRDevtools({
             position: "fixed",
             boxSizing: "border-box",
             bottom: 0,
-            left: 0,
+            left: openBtnPosition === "left" ? 0 : null,
+            right: openBtnPosition === "right" ? 0 : null,
             padding: "1rem",
             zIndex: 999999
           }}
@@ -91,7 +96,7 @@ export default function SWRDevtools({
           </div>
         </div>
       )}
-      <ToolsPanel
+      <Panel
         show={show}
         debug={debug}
         toolbarPosition={toolbarPosition}
@@ -99,10 +104,16 @@ export default function SWRDevtools({
         setToolbarPosition={setToolbarPosition}
         toggleShow={handleToggleShow}
       >
-        {({ theme }) => (
-          <div style={{ display: "flex" }}>
+        {({ theme, size }) => (
+          <div
+            style={{
+              display: "flex",
+              flex: toolbarPosition === "bottom" ? "1 1 auto" : 0
+            }}
+          >
             <div style={{ width: "40%" }}>
               <Keys
+                theme={theme}
                 keys={cacheKeys}
                 selectedKey={selectedCacheKey}
                 onSelect={handleSelectedCacheItem}
@@ -113,6 +124,7 @@ export default function SWRDevtools({
             <div style={{ width: "60%" }}>
               <Data
                 theme={theme}
+                size={size}
                 data={selectedCacheItemData}
                 cacheKey={selectedCacheKey}
                 JsonViewer={ReactJson}
@@ -121,8 +133,10 @@ export default function SWRDevtools({
             </div>
           </div>
         )}
-      </ToolsPanel>
+      </Panel>
       <div>{children}</div>
     </>
   );
 }
+
+export default SWRDevtools;

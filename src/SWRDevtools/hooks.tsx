@@ -20,7 +20,7 @@ export function useStore({ store = "default-db" }) {
       }
     }
     return null;
-  }, []);
+  }, [db]);
   const set = useCallback(
     async (key, values) => {
       if (db !== null) {
@@ -36,7 +36,8 @@ export function useStore({ store = "default-db" }) {
   );
   return {
     set,
-    get
+    get,
+    ready: db ? true : false
   };
 }
 

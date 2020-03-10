@@ -1,22 +1,29 @@
 import React from "react";
 import CloseIcon from "./Icons/CloseIcon";
 import ReloadIcon from "./Icons/ReloadIcon";
+import themes from "./themes";
 
 export default function Keys({
   keys,
   selectedKey,
   onSelect,
   onClear,
-  onRevalidate
+  onRevalidate,
+  theme
 }: any) {
   return (
-    <div style={{ textOverflow: "ellipsis", height: "40vh" }}>
+    <div
+      style={{
+        textOverflow: "ellipsis",
+        height: "100%",
+        ...themes[theme].keys
+      }}
+    >
       <div
         style={{
           width: "100%",
           boxSizing: "border-box",
           backgroundColor: "#68E69EA3",
-
           padding: "0.5rem",
           fontSize: 14,
           fontWeight: 900,
