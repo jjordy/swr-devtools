@@ -22,7 +22,6 @@ const DefaultOpenComponent = (
 );
 
 export function SWRDevtools({
-  children,
   debug = false,
   cache,
   position = "right",
@@ -104,10 +103,12 @@ export function SWRDevtools({
         setToolbarPosition={setToolbarPosition}
         toggleShow={handleToggleShow}
       >
-        {({ theme, size }) => (
+        {({ theme }) => (
           <div
             style={{
               display: "flex",
+              height: "100%",
+              backgroundColor: theme === "Dark" ? "#231f20": "#FFF",
               flex: toolbarPosition === "bottom" ? "1 1 auto" : 0
             }}
           >
@@ -124,7 +125,6 @@ export function SWRDevtools({
             <div style={{ width: "60%" }}>
               <Data
                 theme={theme}
-                size={size}
                 data={selectedCacheItemData}
                 cacheKey={selectedCacheKey}
                 JsonViewer={ReactJson}
@@ -134,7 +134,6 @@ export function SWRDevtools({
           </div>
         )}
       </Panel>
-      <div>{children}</div>
     </>
   );
 }

@@ -6,8 +6,6 @@ export type ToolbarPositions = "right" | "left" | "bottom" | "";
 export interface SWRDevtoolsProps {
   /** The SWR Cache  */
   cache: CacheInterface;
-  /** Your application */
-  children: React.ReactNode;
   /** Custom open component to be rendered inside the open button */
   CustomOpenComponent?: React.ReactNode;
   /** This will print relavent position information to the console */
@@ -35,16 +33,31 @@ export interface PanelProps {
   show: boolean;
   children: ({
     isDragging,
-    theme,
-    size
+    theme
   }: {
     isDragging: boolean;
     theme: string;
-    size: { width: number; height: number };
   }) => React.ReactNode;
   setToolbarPosition: (position: ToolbarPositions) => void;
   toggleShow: () => void;
   debug?: boolean;
+}
+
+export interface KeysProps {
+  keys: string[];
+  selectedKey: string;
+  onSelect: (key: string) => void;
+  onClear: (key: string) => void;
+  onRevalidate:(key: string) => void;
+  theme: string;
+}
+
+export interface DataProps {
+  JsonViewer: any;
+  toolbarPosition: ToolbarPositions;
+  data: any;
+  theme: string;
+  cacheKey: string;
 }
 
 export interface Themes {

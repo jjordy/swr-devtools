@@ -14,7 +14,8 @@
     "build": "rimraf esm && rimraf dist && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc --target ESNext --module ES6 --outDir esm",
     "build:cjs": "ncc build src/index.tsx -o dist -m -e react",
-    "storybook": "start-storybook",
+    "dev": "npm run storybook",
+    "storybook": "start-storybook -p 9001",
     "watch": "tsc --watch"
   },
   "keywords": [

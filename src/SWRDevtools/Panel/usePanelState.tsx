@@ -11,6 +11,7 @@ export default function usePanelState({
   const [isDragging, setIsDragging] = useState(false);
   const { get, set, ready } = useStore({ store: "SWRDevtools" });
   const { width, height } = useWindowSize();
+
   const [size, setSize] = useState<{
     width: number;
     height: number;
@@ -18,17 +19,12 @@ export default function usePanelState({
     width: 400,
     height: height
   });
-  const [currentSize, setSizeCurrent] = useState<{
-    width: number;
-    height: number;
-  }>({
-    width: 400,
-    height: height
-  });
+
   const [position, setPosition] = useState({
-    x: 0,
-    y: 0
+    x: window.scrollX,
+    y: window.scrollY
   });
+
   const handleResize = useCallback(
     //@ts-ignore
     (e: any, direction: any, ref: any, delta: any, position: any) => {
@@ -38,23 +34,12 @@ export default function usePanelState({
       });
       setPosition({ x: position.x, y: position.y });
       setIsDragging(false);
-    },
-    []
-  );
-
-  const handleResizeCurrent = useCallback(
-    //@ts-ignore
-    (e: any, direction: any, ref: any, delta: any, position: any) => {
-      setSizeCurrent({
-        width: ref.offsetWidth,
-        height: ref.offsetHeight
-      });
+      set("width", ref.offsetWidth).catch(err => console.warn(err));
     },
     []
   );
   const handleChangeTheme = useCallback(
     async theme => {
-      console.log(theme);
       await set("theme", theme);
       setTheme(theme);
     },
@@ -67,6 +52,11 @@ export default function usePanelState({
         setTheme(theme);
       }
     });
+    get("width").then(width => {
+      if (width) {
+        setSize({ width, height });
+      }
+    });
   }, [ready]);
 
   useEffect(() => {
@@ -75,9 +65,6 @@ export default function usePanelState({
     }
     if (toolbarPosition === "left") {
       setPosition({ x: 0, y: window.scrollY });
-    }
-    if (toolbarPosition === "bottom") {
-      setPosition({ x: 0, y: window.scrollY + (height - size.height) });
     }
   }, [show]);
 
@@ -104,10 +91,6 @@ export default function usePanelState({
         setPosition({ x: 0, y: position.y });
       }
     }
-    if (toolbarPosition === "bottom") {
-      setSize({ width: width, height: 300 });
-      setPosition({ x: 0, y: position.y + (height - 500) });
-    }
   }, [toolbarPosition, width, height]);
 
   return {
@@ -115,10 +98,8 @@ export default function usePanelState({
     setIsDragging,
     handleChangeTheme,
     handleResize,
-    handleResizeCurrent,
     isDragging,
     position,
-    size,
-    currentSize
+    size
   };
 }

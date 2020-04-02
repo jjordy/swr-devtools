@@ -1,8 +1,9 @@
 import React, { useEffect, memo } from "react";
 import themes from './themes';
 import { useWindowSize } from "./hooks";
+import { DataProps } from "./types";
 
-export default memo(function Data({ JsonViewer, toolbarPosition, data, theme, size }: any) {
+export default memo(function Data({ JsonViewer, toolbarPosition, data, theme }: DataProps) {
   const { height } = useWindowSize();
   useEffect(() => {
     JsonViewer.current = require("react-json-view").default;
@@ -14,7 +15,7 @@ export default memo(function Data({ JsonViewer, toolbarPosition, data, theme, si
       }
     }
     if (toolbarPosition === "bottom") {
-      return {height: size.height - 100 }
+      return {height: 200 }
     }
     return {}
   }

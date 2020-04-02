@@ -2,6 +2,7 @@ import React from "react";
 import CloseIcon from "./Icons/CloseIcon";
 import ReloadIcon from "./Icons/ReloadIcon";
 import themes from "./themes";
+import { KeysProps } from "./types";
 
 export default function Keys({
   keys,
@@ -10,7 +11,7 @@ export default function Keys({
   onClear,
   onRevalidate,
   theme
-}: any) {
+}: KeysProps) {
   return (
     <div
       style={{

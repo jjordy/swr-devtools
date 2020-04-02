@@ -4,7 +4,6 @@ import { Rnd } from "react-rnd";
 import { PanelProps } from "../types";
 import AlignRightIcon from "../Icons/AlignRightIcon";
 import AlignLeftIcon from "../Icons/AlignLeftIcon";
-import AlignBottomIcon from "../Icons/AlignBottomIcon";
 import GithubIcon from "../Icons/GithubIcon";
 import CloseIcon from "../Icons/CloseIcon";
 import themes from "../themes";
@@ -21,9 +20,7 @@ export default function Panel({
   const {
     position,
     size,
-    currentSize,
     handleResize,
-    handleResizeCurrent,
     setIsDragging,
     theme,
     isDragging,
@@ -41,7 +38,6 @@ export default function Panel({
           position={position}
           size={size}
           onResizeStart={() => setIsDragging(true)}
-          onResize={handleResizeCurrent}
           onResizeStop={handleResize}
           enableResizing={{
             top: toolbarPosition === "bottom",
@@ -73,19 +69,6 @@ export default function Panel({
                 SWR Devtools
               </span>
               <div style={{ display: "flex" }}>
-                <button
-                  title="Align Bottom"
-                  aria-label="Align Bottom"
-                  type="button"
-                  onClick={() => setToolbarPosition("bottom")}
-                  style={{
-                    border: 0,
-                    padding: "0.5rem",
-                    backgroundColor: "transparent"
-                  }}
-                >
-                  <AlignBottomIcon />
-                </button>
                 <button
                   aria-label="Align Left"
                   title="Align Left"
@@ -131,7 +114,7 @@ export default function Panel({
                 </button>
               </div>
             </div>
-            {children({ isDragging, theme, size: currentSize })}
+            {children({ isDragging, theme })}
             <div style={themes[theme].bottom}>
               <a
                 target="_blank"
