@@ -4,8 +4,7 @@ import { UsePanelStateProps } from "../types";
 
 export default function usePanelState({
   toolbarPosition,
-  show,
-  previousToolbarPosition
+  show
 }: UsePanelStateProps) {
   const [theme, setTheme] = useState("Dark");
   const [isDragging, setIsDragging] = useState(false);
