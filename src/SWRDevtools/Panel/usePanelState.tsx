@@ -21,8 +21,8 @@ export default function usePanelState({
   });
 
   const [position, setPosition] = useState({
-    x: window.scrollX,
-    y: window.scrollY
+    x: typeof window !== "undefined" ? window.scrollX : 0,
+    y: typeof window !== "undefined" ? window.scrollY : 0
   });
 
   const handleResize = useCallback(
@@ -71,25 +71,11 @@ export default function usePanelState({
   useEffect(() => {
     if (toolbarPosition === "right") {
       setSize({ height, width: 400 });
-      if (previousToolbarPosition === "bottom") {
-        setPosition({
-          x: width - 400,
-          y: window.scrollY
-        });
-      } else {
-        setPosition({ x: width - 400, y: position.y });
-      }
+      setPosition({ x: width - 400, y: position.y });
     }
     if (toolbarPosition === "left") {
       setSize({ height, width: 400 });
-      if (previousToolbarPosition === "bottom") {
-        setPosition({
-          x: 0,
-          y: window.scrollY
-        });
-      } else {
-        setPosition({ x: 0, y: position.y });
-      }
+      setPosition({ x: 0, y: position.y });
     }
   }, [toolbarPosition, width, height]);
 
