@@ -17,8 +17,7 @@ const Dark: Theme = {
     position: "relative",
     height: "100%",
     display: "flex",
-    flexDirection: "column",
-    flex: "1 1 auto"
+    flexDirection: "column"
   },
   keys: {
     backgroundColor: "#231f20E6",
@@ -55,10 +54,9 @@ const Light: Theme = {
   },
   container: {
     position: "relative",
+    height: "100%",
     display: "flex",
-    flex: "1 1 auto",
-    flexDirection: "column",
-    height: "100%"
+    flexDirection: "column"
   },
   keys: {
     backgroundColor: "#fff",

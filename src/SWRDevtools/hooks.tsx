@@ -7,20 +7,23 @@ export function useStore({ store = "default-db" }) {
     openDB(store, 1, {
       upgrade(db) {
         db.createObjectStore("settings");
-      }
-    }).then(db => setDb(db));
+      },
+    }).then((db) => setDb(db));
   }, []);
 
-  const get = useCallback(async key => {
-    if (db !== null) {
-      try {
-        return (await db).get("settings", key);
-      } catch (err) {
-        console.log(err);
+  const get = useCallback(
+    async (key) => {
+      if (db !== null) {
+        try {
+          return (await db).get("settings", key);
+        } catch (err) {
+          console.log(err);
+        }
       }
-    }
-    return null;
-  }, [db]);
+      return null;
+    },
+    [db]
+  );
   const set = useCallback(
     async (key, values) => {
       if (db !== null) {
@@ -37,28 +40,28 @@ export function useStore({ store = "default-db" }) {
   return {
     set,
     get,
-    ready: db ? true : false
+    ready: db ? true : false,
   };
 }
 
 const events = new Set<() => void>();
-const onResize = () => events.forEach(fn => fn());
+const onResize = () => events.forEach((fn) => fn());
 
-export function useWindowSize (options: { throttleMs?: number } = {}) {
+export function useWindowSize(options: { throttleMs?: number } = {}) {
   const { throttleMs = 100 } = options;
   const [size, setSize] = React.useState({
     width: typeof window !== "undefined" ? window.innerWidth : 0,
-    height: typeof window !== "undefined" ? window.innerHeight : 0
+    height: typeof window !== "undefined" ? window.innerHeight : 0,
   });
 
   const handle = throttle(() => {
     setSize({
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
     });
   }, throttleMs);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (events.size === 0) {
       window.addEventListener("resize", onResize, true);
     }
@@ -75,7 +78,7 @@ export function useWindowSize (options: { throttleMs?: number } = {}) {
   }, []);
 
   return size;
-};
+}
 
 export function throttle<T extends (...args: any[]) => void>(
   func: T,
@@ -83,7 +86,7 @@ export function throttle<T extends (...args: any[]) => void>(
   scope?: any
 ): T {
   let last: number, deferTimer: any;
-  return function(this: any) {
+  return function (this: any) {
     let context = scope || this;
 
     let now = Date.now(),
@@ -91,7 +94,7 @@ export function throttle<T extends (...args: any[]) => void>(
     if (last && now < last + threshold) {
       // hold on to it
       clearTimeout(deferTimer);
-      deferTimer = setTimeout(function() {
+      deferTimer = setTimeout(function () {
         last = now;
         func.apply(context, args as any);
       }, threshold);

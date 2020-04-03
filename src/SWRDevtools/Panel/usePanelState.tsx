@@ -2,89 +2,60 @@ import { useEffect, useState, useCallback } from "react";
 import { useWindowSize, useStore } from "../hooks";
 import { UsePanelStateProps } from "../types";
 
-export default function usePanelState({
-  toolbarPosition,
-  show
-}: UsePanelStateProps) {
+const getX = (windowWidth, width) => {
+  const x = windowWidth / 2 - (width / 2);
+  return x
+}
+
+const getY = (windowHeight, height) => {
+  let y = 0;
+  if (typeof window !== "undefined") {
+    typeof window !== "undefined"
+      y = window.scrollY - windowHeight / 2 + (height / 2);
+  }
+  return y;
+}
+
+export default function usePanelState({ show }: UsePanelStateProps) {
   const [theme, setTheme] = useState("Dark");
-  const [isDragging, setIsDragging] = useState(false);
   const { get, set, ready } = useStore({ store: "SWRDevtools" });
-  const { width, height } = useWindowSize();
-
-  const [size, setSize] = useState<{
-    width: number;
-    height: number;
-  }>({
-    width: 400,
-    height: height
-  });
-
-  const [position, setPosition] = useState({
-    x: typeof window !== "undefined" ? window.scrollX : 0,
-    y: typeof window !== "undefined" ? window.scrollY : 0
-  });
-
-  const handleResize = useCallback(
-    //@ts-ignore
-    (e: any, direction: any, ref: any, delta: any, position: any) => {
-      setSize({
-        width: ref.offsetWidth,
-        height: ref.offsetHeight
-      });
-      setPosition({ x: position.x, y: position.y });
-      setIsDragging(false);
-      set("width", ref.offsetWidth).catch(err => console.warn(err));
-    },
-    []
-  );
+  const { width: windowWidth, height: windowHeight } = useWindowSize();
+  const [width, setWidth] = useState(800);
+  const [height, setHeight] = useState(800);
+  //@ts-ignore
+  const handleResize = useCallback(async (e: MouseEvent | TouchEvent, dir: any, refToElement: React.ElementRef<'div'>) => {
+    await set("width", refToElement.offsetWidth);
+    setWidth(refToElement.offsetWidth);
+    await set("height", refToElement.offsetHeight);
+    setHeight(refToElement.offsetHeight);
+  }, [ready, set])
   const handleChangeTheme = useCallback(
-    async theme => {
+    async (theme) => {
       await set("theme", theme);
       setTheme(theme);
     },
-    [set]
+    [set, show]
   );
 
   useEffect(() => {
-    get("theme").then(theme => {
-      if (theme) {
-        setTheme(theme);
-      }
+    get("theme").then((theme) => {
+      if (theme) setTheme(theme);
     });
-    get("width").then(width => {
-      if (width) {
-        setSize({ width, height });
-      }
-    });
+    get("width").then((width) => {
+      if (width) setWidth(width);
+    })
+    get("height").then(height => {
+      if (height) setHeight(height);
+    })
   }, [ready]);
-
-  useEffect(() => {
-    if (toolbarPosition === "right") {
-      setPosition({ x: width - size.width, y: window.scrollY });
-    }
-    if (toolbarPosition === "left") {
-      setPosition({ x: 0, y: window.scrollY });
-    }
-  }, [show]);
-
-  useEffect(() => {
-    if (toolbarPosition === "right") {
-      setSize({ height, width: 400 });
-      setPosition({ x: width - 400, y: position.y });
-    }
-    if (toolbarPosition === "left") {
-      setSize({ height, width: 400 });
-      setPosition({ x: 0, y: position.y });
-    }
-  }, [toolbarPosition, width, height]);
 
   return {
     theme,
-    setIsDragging,
     handleChangeTheme,
     handleResize,
-    isDragging,
-    position,
-    size
+    x: getX(windowWidth, width),
+    y: getY(windowHeight, height),
+    height,
+    width
   };
 }

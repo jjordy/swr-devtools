@@ -31,13 +31,7 @@ export interface PanelProps {
   toolbarPosition: ToolbarPositions;
   previousToolbarPosition: ToolbarPositions;
   show: boolean;
-  children: ({
-    isDragging,
-    theme
-  }: {
-    isDragging: boolean;
-    theme: string;
-  }) => React.ReactNode;
+  children: ({ theme }: { theme: string }) => React.ReactNode;
   setToolbarPosition: (position: ToolbarPositions) => void;
   toggleShow: () => void;
   debug?: boolean;
@@ -48,7 +42,7 @@ export interface KeysProps {
   selectedKey: string;
   onSelect: (key: string) => void;
   onClear: (key: string) => void;
-  onRevalidate:(key: string) => void;
+  onRevalidate: (key: string) => void;
   theme: string;
 }
 

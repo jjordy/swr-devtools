@@ -38,7 +38,7 @@ yarn add @jjordy/swr-devtools
 
 **WARNING THIS LIBRARY IS IN ITS INFANCY AND WILL HAVE LOTS OF BUGS**
 
-**``swr - 0.2.0-beta.0`` is required at minimum because it makes the cache available.**
+**``swr - 0.2.0`` is required at minimum because it makes the cache available.**
 
 Import the devtools component and pass it your instance of the swr cache and mutate function.
 Dont worry about production if your ```NODE_ENV``` is not equal to development we will return an empty react fragment so nothing will be imported or rendered but your children.
@@ -49,9 +49,8 @@ Dont worry about production if your ```NODE_ENV``` is not equal to development w
   function MyApp () {
     return (
       <>
-        <SWRDevtools cache={cache} mutate={mutate}>
-          <App />
-        </SWRDevtools>
+        <SWRDevtools cache={cache} mutate={mutate} />
+        <App />
       </>
     )
   }
@@ -63,11 +62,10 @@ Dont worry about production if your ```NODE_ENV``` is not equal to development w
 | Name  | Type  | Required  | Default |
 |---|---|---|---|
 | cache  | `cacheInterface`  | yes | 
-| children  | `React.ReactNode`   | yes  |
 | CustomOpenComponent  | `React.ReactNode`  |  no |
 | debug | `boolean` | no |
 | mutate   | `mutateInterface`  | yes  |
-| position | `string`: `"right","left","bottom"` | no | right
+| position | `string`: `"right","left"` | no | right
 
 
 

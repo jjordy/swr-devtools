@@ -2,8 +2,6 @@ import React from "react";
 import usePanelState from "./usePanelState";
 import { Rnd } from "react-rnd";
 import { PanelProps } from "../types";
-import AlignRightIcon from "../Icons/AlignRightIcon";
-import AlignLeftIcon from "../Icons/AlignLeftIcon";
 import GithubIcon from "../Icons/GithubIcon";
 import CloseIcon from "../Icons/CloseIcon";
 import themes from "../themes";
@@ -13,19 +11,10 @@ export default function Panel({
   previousToolbarPosition,
   show,
   children,
-  setToolbarPosition,
   toggleShow,
-  debug
+  debug,
 }: PanelProps) {
-  const {
-    position,
-    size,
-    handleResize,
-    setIsDragging,
-    theme,
-    isDragging,
-    handleChangeTheme
-  } = usePanelState({
+  const { theme, handleChangeTheme, width, height, x, y, handleResize } = usePanelState({
     toolbarPosition,
     previousToolbarPosition,
     debug,
@@ -35,26 +24,17 @@ export default function Panel({
     <>
       {show && (
         <Rnd
-          position={position}
-          size={size}
-          onResizeStart={() => setIsDragging(true)}
           onResizeStop={handleResize}
-          enableResizing={{
-            top: toolbarPosition === "bottom",
-            right: toolbarPosition === "left",
-            left: toolbarPosition === "right",
-            topRight: false,
-            topLeft: false,
-            bottomRight: false,
-            bottomLeft: false
+          default={{
+            x,
+            y,
+            width,
+            height,
           }}
-          dragAxis="both"
-          disableDragging
-          bounds="parent"
           style={{
             cursor: "auto",
             position: "fixed",
-            zIndex: 999999
+            zIndex: 999999,
           }}
         >
           <div style={themes[theme].container}>
@@ -63,42 +43,12 @@ export default function Panel({
                 style={{
                   fontSize: 16,
                   fontWeight: 900,
-                  userSelect: "none"
+                  userSelect: "none",
                 }}
               >
                 SWR Devtools
               </span>
               <div style={{ display: "flex" }}>
-                <button
-                  aria-label="Align Left"
-                  title="Align Left"
-                  type="button"
-                  onClick={() => {
-                    setToolbarPosition("left");
-                  }}
-                  style={{
-                    border: 0,
-                    padding: "0.5rem",
-                    backgroundColor: "transparent"
-                  }}
-                >
-                  <AlignLeftIcon />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Align Right"
-                  title="Align Right"
-                  onClick={() => {
-                    setToolbarPosition("right");
-                  }}
-                  style={{
-                    border: 0,
-                    padding: "0.5rem",
-                    backgroundColor: "transparent"
-                  }}
-                >
-                  <AlignRightIcon />
-                </button>
                 <button
                   type="button"
                   aria-label="Close SWR Devtools"
@@ -107,14 +57,14 @@ export default function Panel({
                   style={{
                     border: 0,
                     padding: "0.5rem",
-                    backgroundColor: "transparent"
+                    backgroundColor: "transparent",
                   }}
                 >
                   <CloseIcon />
                 </button>
               </div>
             </div>
-            {children({ isDragging, theme })}
+            {children({ theme })}
             <div style={themes[theme].bottom}>
               <a
                 target="_blank"
@@ -128,7 +78,7 @@ export default function Panel({
                   htmlFor="select_theme"
                   style={{
                     marginRight: "1rem",
-                    color: theme === "Dark" ? "#FFF" : "#222"
+                    color: theme === "Dark" ? "#FFF" : "#222",
                   }}
                 >
                   Select Theme
@@ -140,11 +90,11 @@ export default function Panel({
                     border: "1px solid #e7e7e7",
                     backgroundColor: theme === "Light" ? "#FFF" : "#222",
                     color: theme === "Light" ? "#222" : "#FFF",
-                    borderRadius: 4
+                    borderRadius: 4,
                   }}
-                  onChange={evt => handleChangeTheme(evt.target.value)}
+                  onChange={(evt) => handleChangeTheme(evt.target.value)}
                 >
-                  {Object.keys(themes).map(key => (
+                  {Object.keys(themes).map((key) => (
                     <option key={`select_theme_option_${key}`} value={key}>
                       {key}
                     </option>
