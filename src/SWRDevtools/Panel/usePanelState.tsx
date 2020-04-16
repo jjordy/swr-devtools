@@ -48,7 +48,6 @@ export default function usePanelState({ show }: UsePanelStateProps) {
       if (height) setHeight(height);
     })
   }, [ready]);
-
   return {
     theme,
     handleChangeTheme,

@@ -1,24 +1,11 @@
 import React, { useEffect, memo } from "react";
 import themes from './themes';
-import { useWindowSize } from "./hooks";
 import { DataProps } from "./types";
 
-export default memo(function Data({ JsonViewer, toolbarPosition, data, theme }: DataProps) {
-  const { height } = useWindowSize();
+export default memo(function Data({ JsonViewer, data, theme }: DataProps) {
   useEffect(() => {
     JsonViewer.current = require("react-json-view").default;
   }, [])
-  const getStyles = () => {
-    if (toolbarPosition === "right" || toolbarPosition === "left") {
-      return {
-        height: height - 300
-      }
-    }
-    if (toolbarPosition === "bottom") {
-      return {height: 200 }
-    }
-    return {}
-  }
   return (
     <div style={{ position: "relative", backgroundColor: "#222" }}>
       <div
@@ -26,8 +13,8 @@ export default memo(function Data({ JsonViewer, toolbarPosition, data, theme }: 
           padding: 0,
           textAlign: "left",
           overflowY: "scroll",
+          maxHeight: 400,
           boxSizing: "border-box",
-          ...getStyles(),
           ...themes[theme].data
         }}
       >

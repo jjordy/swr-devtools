@@ -10,14 +10,17 @@ export default function Keys({
   onSelect,
   onClear,
   onRevalidate,
-  theme
+  theme,
 }: KeysProps) {
   return (
     <div
       style={{
         textOverflow: "ellipsis",
+        overflow: "scroll",
+        position: "relative",
+        minHeight: 400,
         height: "100%",
-        ...themes[theme].keys
+        ...themes[theme].keys,
       }}
     >
       <div
@@ -28,7 +31,7 @@ export default function Keys({
           padding: "0.5rem",
           fontSize: 14,
           fontWeight: 900,
-          textOverflow: "ellipsis"
+          textOverflow: "ellipsis",
         }}
       >
         Cache Keys
@@ -41,66 +44,66 @@ export default function Keys({
             width: "100%",
             boxSizing: "border-box",
             backgroundColor: cacheKey === selectedKey ? "#90DAE880" : undefined,
-            padding: "1rem"
+            padding: "1rem",
           }}
         >
-          <span
+          <div
             style={{
-              fontFamily: "monospace",
-              wordBreak: "break-all",
-              fontSize: 12,
-
-              cursor: "pointer"
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "stretch",
+              backgroundColor: "#044BD980",
             }}
           >
-            {cacheKey}
-          </span>
-          {cacheKey === selectedKey && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                marginTop: "0.5rem",
-                alignItems: "center"
-              }}
-            >
+            <div style={{ backgroundColor: "#D9528480" }}>
               <button
                 title="Clear Item"
                 onClick={() => onClear(cacheKey)}
                 style={{
                   border: 0,
-                  backgroundColor: "#D9528480",
                   color: "#fff",
                   fontWeight: "bolder",
                   fontSize: 12,
-                  borderRadius: 6,
-                  padding: "0.2rem",
+                  borderBottomRightRadius: 6,
+                  borderBottomLeftRadius: 6,
+                  padding: "1rem",
                   cursor: "pointer",
-                  marginRight: "0.5rem",
-                  textTransform: "uppercase"
+                  textTransform: "uppercase",
                 }}
               >
                 <CloseIcon />
               </button>
-              <button
-                title="Revalidate"
-                onClick={() => onRevalidate(cacheKey)}
-                style={{
-                  border: 0,
-                  backgroundColor: "#044BD980",
-                  color: "#fff",
-                  fontWeight: "bolder",
-                  fontSize: 12,
-                  borderRadius: 6,
-                  cursor: "pointer",
-                  padding: "0.2rem",
-                  textTransform: "uppercase"
-                }}
-              >
-                <ReloadIcon />
-              </button>
             </div>
-          )}
+            <button
+              title="Revalidate"
+              onClick={() => onRevalidate(cacheKey)}
+              style={{
+                border: 0,
+                color: "#fff",
+                fontWeight: "bolder",
+                fontSize: 12,
+                backgroundColor: "#90DAE880",
+                alignSelf: "flex-end",
+                cursor: "pointer",
+                padding: "1rem",
+                textTransform: "uppercase",
+              }}
+            >
+              <ReloadIcon />
+            </button>
+            <span
+              style={{
+                flex: "1 1 auto",
+                fontFamily: "monospace",
+                textAlign: "center",
+                fontSize: 14,
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              {cacheKey}
+            </span>
+          </div>
         </div>
       ))}
     </div>
