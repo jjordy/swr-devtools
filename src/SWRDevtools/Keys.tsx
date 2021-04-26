@@ -44,7 +44,7 @@ export default function Keys({
             width: "100%",
             boxSizing: "border-box",
             backgroundColor: cacheKey === selectedKey ? "#90DAE880" : undefined,
-            padding: "1rem",
+            // padding: "0.4rem",
           }}
         >
           <div
@@ -95,8 +95,9 @@ export default function Keys({
               style={{
                 flex: "1 1 auto",
                 fontFamily: "monospace",
+                wordBreak: "break-all",
                 textAlign: "center",
-                fontSize: 14,
+                fontSize: 12,
                 fontWeight: 700,
                 cursor: "pointer",
               }}

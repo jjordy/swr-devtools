@@ -1,11 +1,10 @@
-import { mutateInterface } from "swr/dist/types";
-import { CacheInterface } from "swr";
+import {  Mutator, Cache } from "swr/dist/types";
 
 export type ToolbarPositions = "right" | "left" | "bottom" | "";
 
 export interface SWRDevtoolsProps {
   /** The SWR Cache  */
-  cache: CacheInterface;
+  cache: Cache;
   /** Custom open component to be rendered inside the open button */
   CustomOpenComponent?: React.ReactNode;
   /** This will print relavent position information to the console */
@@ -13,7 +12,7 @@ export interface SWRDevtoolsProps {
   /** Default the devtools to being open on render */
   defaultOpen?: boolean;
   /** The SWR mutate function */
-  mutate: mutateInterface;
+  mutate: Mutator;
   /** The default position you would like the devtools to appear in. */
   position?: ToolbarPositions;
   /** Customize the position of the open button / component */
