@@ -19,6 +19,7 @@ const getY = (windowHeight, height) => {
 export default function usePanelState({ show }: UsePanelStateProps) {
   const [theme, setTheme] = useState("Dark");
   const { get, set, ready } = useStore({ store: "SWRDevtools" });
+  const [resizing, setResizing] = useState(false);
   const { width: windowWidth, height: windowHeight } = useWindowSize();
   const [width, setWidth] = useState(1000);
   const [height, setHeight] = useState(800);
@@ -28,7 +29,8 @@ export default function usePanelState({ show }: UsePanelStateProps) {
     setWidth(refToElement.offsetWidth);
     await set("height", refToElement.offsetHeight);
     setHeight(refToElement.offsetHeight);
-  }, [ready, set])
+    setResizing(false)
+  }, [ready, set, setResizing])
   const handleChangeTheme = useCallback(
     async (theme) => {
       await set("theme", theme);
@@ -52,6 +54,8 @@ export default function usePanelState({ show }: UsePanelStateProps) {
     theme,
     handleChangeTheme,
     handleResize,
+    resizing,
+    setResizing,
     x: getX(windowWidth, width),
     y: getY(windowHeight, height),
     height,

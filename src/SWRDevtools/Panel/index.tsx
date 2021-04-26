@@ -21,6 +21,8 @@ export default function Panel({
     height,
     x,
     y,
+    setResizing,
+    resizing,
     handleResize,
   } = usePanelState({
     toolbarPosition,
@@ -33,6 +35,11 @@ export default function Panel({
       {show && (
         <Rnd
           onResizeStop={handleResize}
+          onResizeStart={() => {
+            if (!resizing) {
+              setResizing(true)
+            }
+          }}
           default={{
             x,
             y,
@@ -72,7 +79,7 @@ export default function Panel({
                 </button>
               </div>
             </div>
-            {children({ theme })}
+            {children({ theme, width, resizing })}
             <div style={themes[theme].bottom}>
               <a
                 target="_blank"

@@ -13,6 +13,7 @@ export default function Keys({
   onClear,
   onRevalidate,
   theme,
+  panelWidth,
   children = <></>,
 }: KeysProps) {
   const {
@@ -128,7 +129,7 @@ export default function Keys({
           ))}
         </div>
       </Rnd>
-      <div style={{ marginLeft: width, height: height, width: `calc(100% - ${width}px)` }}>{children}</div>
+      <div style={{ marginLeft: width, height: height, width: `calc(${panelWidth}px - ${width}px)` }}>{children}</div>
     </>
   );
 }

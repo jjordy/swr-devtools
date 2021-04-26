@@ -1,5 +1,5 @@
 import React from "react";
-import {  Mutator, Cache } from "swr/dist/types";
+import { Mutator, Cache } from "swr/dist/types";
 
 export type ToolbarPositions = "right" | "left" | "bottom" | "";
 
@@ -31,7 +31,15 @@ export interface PanelProps {
   toolbarPosition: ToolbarPositions;
   previousToolbarPosition: ToolbarPositions;
   show: boolean;
-  children: ({ theme }: { theme: string }) => React.ReactNode;
+  children: ({
+    theme,
+    width,
+    resizing,
+  }: {
+    theme: string;
+    width: number;
+    resizing: boolean;
+  }) => React.ReactNode;
   setToolbarPosition: (position: ToolbarPositions) => void;
   toggleShow: () => void;
   debug?: boolean;
@@ -44,13 +52,15 @@ export interface KeysProps {
   onClear: (key: string) => void;
   onRevalidate: (key: string) => void;
   theme: string;
-  children?: React.ReactNode
+  children?: React.ReactNode;
+  panelWidth?: number;
 }
 
 export interface DataProps {
   JsonViewer: any;
   toolbarPosition: ToolbarPositions;
   data: any;
+  resizing?: boolean;
   theme: string;
   cacheKey: string;
 }

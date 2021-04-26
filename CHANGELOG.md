@@ -23,3 +23,6 @@
 
 ## [1.0.3]
   - Fixed default styling (tricked by tailwind and storybook)
+
+## [1.0.4]
+  - Fixed Data window to always be current width and height

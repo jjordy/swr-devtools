@@ -115,7 +115,7 @@ export function SWRDevtools({
         setToolbarPosition={setToolbarPosition}
         toggleShow={handleToggleShow}
       >
-        {({ theme }) => (
+        {({ theme, width: panelWidth, resizing }) => (
           <div
             style={{
               display: "flex",
@@ -128,6 +128,7 @@ export function SWRDevtools({
               <Keys
                 theme={theme}
                 keys={cacheKeys}
+                panelWidth={panelWidth}
                 selectedKey={selectedCacheKey}
                 onSelect={handleSelectedCacheItem}
                 onClear={clearCacheByKey}
@@ -135,6 +136,7 @@ export function SWRDevtools({
               >
                 <Data
                   theme={theme}
+                  resizing={resizing}
                   data={selectedCacheItemData}
                   cacheKey={selectedCacheKey}
                   JsonViewer={ReactJson}
