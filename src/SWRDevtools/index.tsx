@@ -88,6 +88,8 @@ export function SWRDevtools({
             left: openBtnPosition === "left" ? 150 : null,
             right: openBtnPosition === "right" ? 150 : null,
             zIndex: 999999,
+            backgroundColor: "#222",
+            borderRadius: 6
           }}
         >
           <button
@@ -97,6 +99,7 @@ export function SWRDevtools({
               border: 0,
               backgroundColor: "transparent",
               boxSizing: "border-box",
+              borderRadius: 6,
               padding: 0,
             }}
           >

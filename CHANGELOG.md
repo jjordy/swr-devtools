@@ -20,3 +20,6 @@
 
 ## [1.0.2]
   - Feature make the keys window draggable
+
+## [1.0.3]
+  - Fixed default styling (tricked by tailwind and storybook)

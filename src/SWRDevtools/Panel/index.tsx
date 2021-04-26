@@ -91,7 +91,7 @@ export default function Panel({
                   }}
                 ></label>
                 <button
-                  style={{}}
+                  style={{ border: 0, backgroundColor: "transparent"}}
                   aria-label={`Toggle Theme - Current (${theme})`}
                   onClick={() => {
                     if (theme === "Dark") {
@@ -103,7 +103,8 @@ export default function Panel({
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
+                    width="24"
+                    height="24"
                     fill={theme === "Dark" ? "#FFF" : "#000"}
                     viewBox="0 0 24 24"
                   >
