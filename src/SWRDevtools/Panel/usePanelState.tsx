@@ -20,7 +20,7 @@ export default function usePanelState({ show }: UsePanelStateProps) {
   const [theme, setTheme] = useState("Dark");
   const { get, set, ready } = useStore({ store: "SWRDevtools" });
   const { width: windowWidth, height: windowHeight } = useWindowSize();
-  const [width, setWidth] = useState(800);
+  const [width, setWidth] = useState(1000);
   const [height, setHeight] = useState(800);
   //@ts-ignore
   const handleResize = useCallback(async (e: MouseEvent | TouchEvent, dir: any, refToElement: React.ElementRef<'div'>) => {

@@ -83,6 +83,7 @@ export function SWRDevtools({
           style={{
             position: "fixed",
             boxSizing: "border-box",
+            boxShadow: "2px 2px 2px #222",
             bottom: 0,
             left: openBtnPosition === "left" ? 150 : null,
             right: openBtnPosition === "right" ? 150 : null,
@@ -120,7 +121,7 @@ export function SWRDevtools({
               flex: toolbarPosition === "bottom" ? "1 1 auto" : 0,
             }}
           >
-            <div style={{ width: "40%" }}>
+            <div style={{ position: "relative", boxSizing: "border-box" }}>
               <Keys
                 theme={theme}
                 keys={cacheKeys}
@@ -128,16 +129,15 @@ export function SWRDevtools({
                 onSelect={handleSelectedCacheItem}
                 onClear={clearCacheByKey}
                 onRevalidate={revalidate}
-              />
-            </div>
-            <div style={{ width: "60%" }}>
-              <Data
-                theme={theme}
-                data={selectedCacheItemData}
-                cacheKey={selectedCacheKey}
-                JsonViewer={ReactJson}
-                toolbarPosition={toolbarPosition}
-              />
+              >
+                <Data
+                  theme={theme}
+                  data={selectedCacheItemData}
+                  cacheKey={selectedCacheKey}
+                  JsonViewer={ReactJson}
+                  toolbarPosition={toolbarPosition}
+                />
+              </Keys>
             </div>
           </div>
         )}

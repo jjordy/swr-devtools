@@ -17,3 +17,6 @@
 ## [1.0.1]
   - Remove validating keys from cache for display
   - Further cleanup padding and UI (still work in progress)
+
+## [1.0.2]
+  - Feature make the keys window draggable

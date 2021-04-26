@@ -1,3 +1,4 @@
+import React from "react";
 import {  Mutator, Cache } from "swr/dist/types";
 
 export type ToolbarPositions = "right" | "left" | "bottom" | "";
@@ -43,6 +44,7 @@ export interface KeysProps {
   onClear: (key: string) => void;
   onRevalidate: (key: string) => void;
   theme: string;
+  children?: React.ReactNode
 }
 
 export interface DataProps {
