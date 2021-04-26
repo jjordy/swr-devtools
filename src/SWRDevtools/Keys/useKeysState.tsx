@@ -24,6 +24,7 @@ export default function useKeysState() {
     });
   }, 25);
   const handleResize = useCallback(
+    //@ts-ignore
     async (e, direction, ref, delta, position) => {
       handle(parseInt(ref.style.width, 10), position);
     },
