@@ -1,8 +1,7 @@
 name: Publish package
 on:
-  push:
-    branches:
-      - master
+  release:
+    types: [released]
 
 env:
   NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
