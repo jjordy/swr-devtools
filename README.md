@@ -33,8 +33,6 @@ yarn add @jjordy/swr-devtools
 
 #### Usage
 
-**WARNING THIS LIBRARY IS IN ITS INFANCY AND WILL HAVE LOTS OF BUGS**
-
 **``swr - 0.2.0`` is required at minimum because it makes the cache available.**
 
 Import the devtools component and pass it your instance of the swr cache and mutate function.
