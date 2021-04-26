@@ -1,0 +1,36 @@
+name: Typescript CI
+
+on:
+  pull_request:
+    paths:
+      - "src/**"
+      - ".eslintignore"
+      - ".eslintrc.json"
+      - "package.json"
+      - ".prettierrc.json"
+      - "yarn.lock"
+      - ".storybook"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: ['14.15.*']
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: install deps
+        run: yarn
+
+      - name: lint
+        run: yarn lint
+
+      - name: build
+        run: yarn build

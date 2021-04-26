@@ -1,6 +1,8 @@
 {
-  "name": "@jjordy/swr-devtools",
+  "name": "@k3nt0w/swr-devtools",
   "version": "0.2.27",
+  "author": "Kento Watanabe <kento.watanabe.11@gmail.com>",
+  "license": "MIT",
   "description": "Devtools for SWR",
   "private": false,
   "main": "./dist/index.js",
@@ -11,20 +13,19 @@
     "esm/**"
   ],
   "scripts": {
+    "dev": "npm run storybook",
+    "watch": "tsc --watch",
     "build": "rimraf esm && rimraf dist && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc --target ESNext --module ES6 --outDir esm",
     "build:cjs": "ncc build src/index.tsx -o dist -m -e react",
-    "dev": "npm run storybook",
-    "storybook": "start-storybook -p 9001",
-    "watch": "tsc --watch"
+    "lint": "eslint . --ext '.ts,.tsx'",
+    "storybook": "start-storybook -p 9001"
   },
   "keywords": [
     "SWR",
     "Devtools",
     "Devtool"
   ],
-  "author": "Jordan Addison <jordanrileyaddison@gmail.com>",
-  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.8.7",
     "@storybook/addon-info": "^5.3.14",
@@ -32,12 +33,23 @@
     "@types/node": "^13.9.0",
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
+    "@typescript-eslint/eslint-plugin": "4.16.1",
+    "@typescript-eslint/parser": "4.16.1",
     "@zeit/ncc": "^0.21.1",
     "babel-loader": "^8.0.6",
+    "eslint": "7.22.0",
+    "eslint-config-prettier": "8.1.0",
+    "eslint-plugin-prettier": "3.3.1",
+    "eslint-plugin-react": "7.22.0",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jest": "24.1.5",
+    "eslint-plugin-jsx-a11y": "6.4.1",
     "react": "^16.13.0",
     "react-docgen-typescript-loader": "^3.7.0",
     "react-dom": "^16.13.0",
     "rimraf": "^3.0.2",
+    "prettier": "2.2.1",
     "swr": "^0.2.0-beta.0",
     "ts-loader": "^6.2.1",
     "typescript": "^3.8.3"

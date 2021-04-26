@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function AlignLeftIcon () {
+export default function AlignLeftIcon() {
   return (
     <svg
       id="Layer"
@@ -17,5 +17,5 @@ export default function AlignLeftIcon () {
       <path d="m54 30h-44c-1.104 0-2 .896-2 2s.896 2 2 2h44c1.104 0 2-.896 2-2s-.896-2-2-2z" />
       <path d="m10 45h28c1.104 0 2-.896 2-2s-.896-2-2-2h-28c-1.104 0-2 .896-2 2s.896 2 2 2z" />
     </svg>
-  );
+  )
 }

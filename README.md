@@ -4,21 +4,22 @@ Devtools for [swr](https://swr.now.sh/)
 
 ## Table of Contents
 
-* [Screenshot](#Screenshot)
-* [Live Demo](#live-demo)
-  * [CodeSandbox](#codesandbox)
-* [Install](#install)
-* [Usage](#usage)
-* [Props](#props)
-* [Maintainers](#maintainers)
-* [License](#license)
+- [Screenshot](#Screenshot)
+- [Live Demo](#live-demo)
+  - [CodeSandbox](#codesandbox)
+- [Install](#install)
+- [Usage](#usage)
+- [Props](#props)
+- [Maintainers](#maintainers)
+- [License](#license)
 
 ## Screenshot
+
 ![swr-devtools](https://user-images.githubusercontent.com/2831940/76174150-86dd3a00-6173-11ea-84c2-72b557d4292d.gif)
 
 ## Live Demo
- [Code Sandbox](https://codesandbox.io/s/swr-devtools-o9juu)
 
+[Code Sandbox](https://codesandbox.io/s/swr-devtools-o9juu)
 
 ## Install
 
@@ -38,40 +39,37 @@ yarn add @jjordy/swr-devtools
 
 **WARNING THIS LIBRARY IS IN ITS INFANCY AND WILL HAVE LOTS OF BUGS**
 
-**``swr - 0.2.0`` is required at minimum because it makes the cache available.**
+**`swr - 0.2.0` is required at minimum because it makes the cache available.**
 
 Import the devtools component and pass it your instance of the swr cache and mutate function.
-Dont worry about production if your ```NODE_ENV``` is not equal to development we will return an empty react fragment so nothing will be imported or rendered but your children.
+Dont worry about production if your `NODE_ENV` is not equal to development we will return an empty react fragment so nothing will be imported or rendered but your children.
 
 ```javascript
-  import SWRDevtools from '@jjordy/swr-devtools'
-  import { cache, mutate } from 'swr'
-  function MyApp () {
-    return (
-      <>
-        <SWRDevtools cache={cache} mutate={mutate} />
-        <App />
-      </>
-    )
-  }
+import SWRDevtools from '@jjordy/swr-devtools'
+import { cache, mutate } from 'swr'
+function MyApp() {
+  return (
+    <>
+      <SWRDevtools cache={cache} mutate={mutate} />
+      <App />
+    </>
+  )
+}
 ```
 
-#### Props 
+#### Props
 
-
-| Name  | Type  | Required  | Default |
-|---|---|---|---|
-| cache  | `cacheInterface`  | yes | 
-| CustomOpenComponent  | `React.ReactNode`  |  no |
-| debug | `boolean` | no |
-| mutate   | `mutateInterface`  | yes  |
-| position | `string`: `"right","left"` | no | right
-
-
+| Name                | Type                       | Required | Default |
+| ------------------- | -------------------------- | -------- | ------- |
+| cache               | `cacheInterface`           | yes      |
+| CustomOpenComponent | `React.ReactNode`          | no       |
+| debug               | `boolean`                  | no       |
+| mutate              | `mutateInterface`          | yes      |
+| position            | `string`: `"right","left"` | no       | right   |
 
 ## Maintainers
 
-* Jordan Addison
+- Kento Watanabe
 
 ## License
 

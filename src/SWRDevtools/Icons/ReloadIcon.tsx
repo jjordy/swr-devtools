@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export default function ReloadIcon() {
   return (
@@ -53,5 +53,5 @@ export default function ReloadIcon() {
       <g></g>
       <g></g>
     </svg>
-  );
+  )
 }

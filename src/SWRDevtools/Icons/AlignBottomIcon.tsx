@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export default function AlignBottomIcon() {
   return (
@@ -37,5 +37,5 @@ export default function AlignBottomIcon() {
       <g></g>
       <g></g>
     </svg>
-  );
+  )
 }
