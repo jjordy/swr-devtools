@@ -26,13 +26,13 @@ Devtools for [swr](https://swr.now.sh/)
 #### NPM
 
 ```bash
-npm install @jjordy/swr-devtools
+npm install @k3nt0w/swr-devtools
 ```
 
 #### Yarn
 
 ```bash
-yarn add @jjordy/swr-devtools
+yarn add @k3nt0w/swr-devtools
 ```
 
 #### Usage
@@ -45,7 +45,7 @@ Import the devtools component and pass it your instance of the swr cache and mut
 Dont worry about production if your `NODE_ENV` is not equal to development we will return an empty react fragment so nothing will be imported or rendered but your children.
 
 ```javascript
-import SWRDevtools from '@jjordy/swr-devtools'
+import SWRDevtools from '@k3nt0w/swr-devtools'
 import { cache, mutate } from 'swr'
 function MyApp() {
   return (
