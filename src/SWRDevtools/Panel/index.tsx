@@ -14,11 +14,19 @@ export default function Panel({
   toggleShow,
   debug,
 }: PanelProps) {
-  const { theme, handleChangeTheme, width, height, x, y, handleResize } = usePanelState({
+  const {
+    theme,
+    handleChangeTheme,
+    width,
+    height,
+    x,
+    y,
+    handleResize,
+  } = usePanelState({
     toolbarPosition,
     previousToolbarPosition,
     debug,
-    show
+    show,
   });
   return (
     <>
@@ -81,39 +89,32 @@ export default function Panel({
                     marginRight: "1rem",
                     color: theme === "Dark" ? "#FFF" : "#222",
                   }}
+                ></label>
+                <button
+                  style={{}}
+                  aria-label={`Toggle Theme - Current (${theme})`}
+                  onClick={() => {
+                    if (theme === "Dark") {
+                      handleChangeTheme("Light");
+                    } else {
+                      handleChangeTheme("Dark");
+                    }
+                  }}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
-                    fill="none"
+                    fill={theme === "Dark" ? "#FFF" : "#000"}
                     viewBox="0 0 24 24"
-                    stroke="currentColor"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
                     />
                   </svg>
-                </label>
-                <select
-                  value={theme}
-                  style={{
-                    padding: "0.2rem",
-                    border: "1px solid #e7e7e7",
-                    backgroundColor: theme === "Light" ? "#FFF" : "#222",
-                    color: theme === "Light" ? "#222" : "#FFF",
-                    borderRadius: 4,
-                  }}
-                  onChange={(evt) => handleChangeTheme(evt.target.value)}
-                >
-                  {Object.keys(themes).map((key) => (
-                    <option key={`select_theme_option_${key}`} value={key}>
-                      {key}
-                    </option>
-                  ))}
-                </select>
+                </button>
               </div>
             </div>
           </div>

@@ -13,11 +13,8 @@ Devtools for [swr](https://swr.now.sh/)
 * [Maintainers](#maintainers)
 * [License](#license)
 
-## Screenshot
-![swr-devtools](https://user-images.githubusercontent.com/2831940/76174150-86dd3a00-6173-11ea-84c2-72b557d4292d.gif)
-
 ## Live Demo
- [Code Sandbox](https://codesandbox.io/s/swr-devtools-o9juu)
+[![Edit swr-devtools (forked)](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/swr-devtools-forked-iq03b?fontsize=14&hidenavigation=1&theme=dark)
 
 
 ## Install
@@ -61,10 +58,10 @@ Dont worry about production if your ```NODE_ENV``` is not equal to development w
 
 | Name  | Type  | Required  | Default |
 |---|---|---|---|
-| cache  | `cacheInterface`  | yes | 
+| cache  | `Cache`  | yes | 
 | CustomOpenComponent  | `React.ReactNode`  |  no |
 | debug | `boolean` | no |
-| mutate   | `mutateInterface`  | yes  |
+| mutate   | `Mutator`  | yes  |
 | position | `string`: `"right","left"` | no | right
 
 

@@ -51,6 +51,7 @@ export default function Keys({
             style={{
               display: "flex",
               alignItems: "center",
+              marginBottom: "0.2rem",
               justifyContent: "stretch",
               backgroundColor: "#044BD980",
             }}
@@ -63,10 +64,11 @@ export default function Keys({
                   border: 0,
                   color: "#fff",
                   fontWeight: "bolder",
+                  height: "auto",
                   fontSize: 12,
                   borderBottomRightRadius: 6,
                   borderBottomLeftRadius: 6,
-                  padding: "1rem",
+                  padding: "0.6rem",
                   cursor: "pointer",
                   textTransform: "uppercase",
                 }}
@@ -82,10 +84,10 @@ export default function Keys({
                 color: "#fff",
                 fontWeight: "bolder",
                 fontSize: 12,
+                height: "auto",
                 backgroundColor: "#90DAE880",
-                alignSelf: "flex-end",
                 cursor: "pointer",
-                padding: "1rem",
+                padding: "0.6rem",
                 textTransform: "uppercase",
               }}
             >
@@ -100,6 +102,7 @@ export default function Keys({
                 fontSize: 12,
                 fontWeight: 700,
                 cursor: "pointer",
+                padding: "0.2rem"
               }}
             >
               {cacheKey}

@@ -1,6 +1,9 @@
 const path = require('path');
 
 module.exports = {
+  features: {
+    postcss: false
+  },
   stories: ["./**/*.stories.@(tsx|jsx)"],
   // webpackFinal: async (config) => {
   //   config.module.rules.push({

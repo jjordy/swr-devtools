@@ -6,29 +6,29 @@ import { withInfo } from "@storybook/addon-info";
 export default {
   title: "SWR Devtools",
   decorators: [withInfo],
-  parameters: { info: { inline: true } }
+  parameters: { info: { inline: true } },
 };
 
 function fetcher(url) {
   return fetch(url)
-    .then(res => res)
-    .then(res => res.json());
+    .then((res) => res)
+    .then((res) => res.json());
 }
 
 interface Color {
-  id: number
-  name: string
-  year: number
+  id: number;
+  name: string;
+  year: number;
   color: string;
   pantone_value: string;
 }
 
 interface ApiResponse {
-  page: number
-  per_page: number
-  total: number
-  total_pages: number
-  data: Color[]
+  page: number;
+  per_page: number;
+  total: number;
+  total_pages: number;
+  data: Color[];
 }
 
 const Colors = () => {
@@ -50,11 +50,18 @@ const Colors = () => {
       )}
       <div className="flex flex-wrap mt-2">
         {data &&
-          data.data.map(item => (
+          data.data.map((item) => (
             <div key={item.id} className="w-1/2  mb-2">
-              <div className="p-4 mr-2 shadow-xl border h-full rounded-lg" style={{backgroundColor: item.color}}>
-                <h3 className="text-4xl uppercase text-center font-bold text-white">{item.name}</h3>
-                <p className="text-xl uppercase text-center font-bold text-white">{item.color}</p>
+              <div
+                className="p-4 mr-2 shadow-xl border h-full rounded-lg"
+                style={{ backgroundColor: item.color }}
+              >
+                <h3 className="text-4xl uppercase text-center font-bold text-white">
+                  {item.name}
+                </h3>
+                <p className="text-xl uppercase text-center font-bold text-white">
+                  {item.color}
+                </p>
               </div>
             </div>
           ))}
@@ -117,6 +124,26 @@ export const defaultOpen = () => {
     <div>
       <SWRDevtools cache={cache} mutate={mutate} defaultOpen debug />
       <Colors />
+    </div>
+  );
+};
+
+const Coins = () => {
+  useSWR(`https://spaceflightnewsapi.net/api/v2/articles?_limit=100`, fetcher);
+  useSWR(`https://spaceflightnewsapi.net/api/v2/articles?_limit=100&_start=100`, fetcher);
+  useSWR(`https://spaceflightnewsapi.net/api/v2/articles?_limit=100&_start=200`, fetcher);
+  useSWR(`https://spaceflightnewsapi.net/api/v2/articles?_limit=100&_start=300`, fetcher);
+  useSWR(`https://spaceflightnewsapi.net/api/v2/articles?_limit=100&_start=400`, fetcher);
+  useSWR(`https://spaceflightnewsapi.net/api/v2/articles?_limit=100&_start=500`, fetcher);
+
+  return null;
+};
+
+export const manyRequests = () => {
+  return (
+    <div>
+      <SWRDevtools cache={cache} mutate={mutate} defaultOpen debug />
+      <Coins />
     </div>
   );
 };

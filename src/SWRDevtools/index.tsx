@@ -9,6 +9,10 @@ function filterErrors(keys: string[]) {
   return keys.filter((key) => !key.includes("err@"));
 }
 
+function filterValidating(keys: string[]) {
+  return keys.filter((key) => !key.includes("validating@"))
+}
+
 const DefaultOpenComponent = (
   <span
     aria-label="Open Devtools"
@@ -42,13 +46,15 @@ export function SWRDevtools({
     position
   );
   const prevPosition = usePrevious(toolbarPosition);
-  const [cacheKeys, setCacheKeys] = useState(filterErrors(cache.keys()));
+  const [cacheKeys, setCacheKeys] = useState(
+    filterValidating(filterErrors(cache.keys()))
+  );
   const [selectedCacheItemData, setSelectedCacheItemData] = useState(null);
   const [selectedCacheKey, setSelectedCacheKey] = useState<string | null>(null);
   const handleToggleShow = () => toggleShow(!show);
 
   const handleSetCacheKey = useCallback(() => {
-    setCacheKeys(filterErrors(cache.keys()));
+    setCacheKeys(filterValidating(filterErrors(cache.keys())));
     if (selectedCacheKey) {
       setSelectedCacheItemData(cache.get(selectedCacheKey));
     }
