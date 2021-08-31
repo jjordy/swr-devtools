@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Data from "./Data";
 import Keys from "./Keys";
 import Panel from "./Panel";
@@ -6,11 +6,32 @@ import { ToolbarPositions, SWRDevtoolsProps } from "./types";
 import { usePrevious } from "./hooks";
 
 function filterErrors(keys: string[]) {
-  return keys.filter((key) => !key.includes("err@"));
+  let errs = [];
+  try {
+    for (const item of keys) {
+      if (!item.includes("$err$")) {
+        errs.push(item);
+      }
+    }
+  } catch (err) {
+  } finally {
+    return errs;
+  }
 }
 
 function filterValidating(keys: string[]) {
-  return keys.filter((key) => !key.includes("validating@"))
+  let errs = [];
+  try {
+    for (const item of keys) {
+      if (!item.includes("$req$")) {
+        console.log(item)
+        errs.push(item);
+      }
+    }
+  } catch (err) {
+  } finally {
+    return errs;
+  }
 }
 
 const DefaultOpenComponent = (
@@ -32,8 +53,8 @@ const DefaultOpenComponent = (
 
 export function SWRDevtools({
   debug = false,
-  cache,
   position = "right",
+  cache,
   mutate,
   CustomOpenComponent,
   openBtnPosition = "left",
@@ -49,23 +70,20 @@ export function SWRDevtools({
   const [cacheKeys, setCacheKeys] = useState(
     filterValidating(filterErrors(cache.keys()))
   );
+
   const [selectedCacheItemData, setSelectedCacheItemData] = useState(null);
   const [selectedCacheKey, setSelectedCacheKey] = useState<string | null>(null);
   const handleToggleShow = () => toggleShow(!show);
 
-  const handleSetCacheKey = useCallback(() => {
-    setCacheKeys(filterValidating(filterErrors(cache.keys())));
-    if (selectedCacheKey) {
-      setSelectedCacheItemData(cache.get(selectedCacheKey));
-    }
-  }, [selectedCacheKey]);
-
   useEffect(() => toggleShow(defaultOpen), [defaultOpen]);
 
-  useEffect(() => cache.subscribe(handleSetCacheKey), [handleSetCacheKey]);
+  useEffect(() => {
+    setCacheKeys(filterValidating(filterErrors(cache.keys())));
+  }, [cache]);
 
   const handleSelectedCacheItem = (key: string) => {
     setSelectedCacheKey(key);
+    console.log(cache.get(key));
     setSelectedCacheItemData(cache.get(key));
   };
 
@@ -74,7 +92,7 @@ export function SWRDevtools({
   };
 
   const revalidate = (key: string) => {
-    mutate(key);
+    mutate(cache, key);
   };
   return (
     <>
@@ -89,7 +107,7 @@ export function SWRDevtools({
             right: openBtnPosition === "right" ? 150 : null,
             zIndex: 999999,
             backgroundColor: "#222",
-            borderRadius: 6
+            borderRadius: 6,
           }}
         >
           <button

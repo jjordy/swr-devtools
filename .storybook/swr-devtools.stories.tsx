@@ -1,6 +1,6 @@
 import React from "react";
 import SWRDevtools from "../src/index";
-import useSWR, { cache, mutate } from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { withInfo } from "@storybook/addon-info";
 
 export default {
@@ -32,6 +32,7 @@ interface ApiResponse {
 }
 
 const Colors = () => {
+  
   const { data, error } = useSWR<ApiResponse>(
     `https://reqres.in/api/unknown`,
     fetcher
@@ -72,6 +73,7 @@ const Colors = () => {
 };
 
 export const defaultSetup = () => {
+  const { mutate, cache } = useSWRConfig();
   return (
     <div>
       <SWRDevtools cache={cache} mutate={mutate} />
@@ -81,6 +83,7 @@ export const defaultSetup = () => {
 };
 
 const CustomOpenIcon = () => {
+  
   return (
     <div className="px-3 py-2 shadow border rounded bg-blue-500 hover:bg-blue-800 text-white font-extrabold">
       OPEN DEVTOOLS CUSTOM
@@ -89,11 +92,12 @@ const CustomOpenIcon = () => {
 };
 
 export const customOpenIcon = () => {
+  const { mutate, cache } = useSWRConfig();
   return (
     <div>
       <SWRDevtools
-        cache={cache}
-        mutate={mutate}
+      cache={cache}
+      mutate={mutate}
         CustomOpenComponent={<CustomOpenIcon />}
       />
       <Colors />
@@ -102,6 +106,7 @@ export const customOpenIcon = () => {
 };
 
 export const customDefaultPosition = () => {
+  const { mutate, cache } = useSWRConfig();
   return (
     <div>
       <SWRDevtools cache={cache} mutate={mutate} position="bottom" />
@@ -111,18 +116,20 @@ export const customDefaultPosition = () => {
 };
 
 export const customButtonPosition = () => {
+  const { mutate, cache } = useSWRConfig();
   return (
     <div>
-      <SWRDevtools cache={cache} mutate={mutate} openBtnPosition="right" />
+      <SWRDevtools mutate={mutate} cache={cache} openBtnPosition="right" />
       <Colors />
     </div>
   );
 };
 
 export const defaultOpen = () => {
+  const { mutate, cache } = useSWRConfig();
   return (
     <div>
-      <SWRDevtools cache={cache} mutate={mutate} defaultOpen debug />
+      <SWRDevtools mutate={mutate} cache={cache} defaultOpen debug />
       <Colors />
     </div>
   );
@@ -140,9 +147,10 @@ const Coins = () => {
 };
 
 export const manyRequests = () => {
+  const { mutate, cache } = useSWRConfig();
   return (
     <div>
-      <SWRDevtools cache={cache} mutate={mutate} defaultOpen debug />
+      <SWRDevtools mutate={mutate} cache={cache} defaultOpen debug />
       <Coins />
     </div>
   );

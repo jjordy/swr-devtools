@@ -1,11 +1,11 @@
 import React from "react";
-import { Mutator, Cache } from "swr/dist/types";
+import { Mutator } from "swr/dist/types";
 
 export type ToolbarPositions = "right" | "left" | "bottom" | "";
 
 export interface SWRDevtoolsProps {
   /** The SWR Cache  */
-  cache: Cache;
+  cache: any;
   /** Custom open component to be rendered inside the open button */
   CustomOpenComponent?: React.ReactNode;
   /** This will print relavent position information to the console */

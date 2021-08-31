@@ -26,3 +26,8 @@
 
 ## [1.0.4]
   - Fixed Data window to always be current width and height
+
+## [2.0.0]
+  - Upgrade to SWR 1.0
+  - Slightly change implementation to work with new cache from swr.
+  - Upgrade dependencies
