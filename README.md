@@ -14,7 +14,7 @@ Devtools for [swr](https://swr.now.sh/)
 * [License](#license)
 
 ## Live Demo
-[![Edit swr-devtools (forked)](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/swr-devtools-forked-iq03b?fontsize=14&hidenavigation=1&theme=dark)
+[![Edit swr-devtools (forked)](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/exciting-benz-t5pq0?file=/src/App.tsx)
 
 
 ## Install
@@ -33,7 +33,7 @@ yarn add @jjordy/swr-devtools
 
 #### Usage
 
-**``swr - 0.2.0`` is required at minimum because it makes the cache available.**
+**``swr - 1.0.0`` is required at minimum .**
 
 Import the devtools component and pass it your instance of the swr cache and mutate function.
 Dont worry about production if your ```NODE_ENV``` is not equal to development we will return an empty react fragment so nothing will be imported or rendered but your children.

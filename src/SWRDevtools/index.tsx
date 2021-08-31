@@ -24,7 +24,6 @@ function filterValidating(keys: string[]) {
   try {
     for (const item of keys) {
       if (!item.includes("$req$")) {
-        console.log(item)
         errs.push(item);
       }
     }
@@ -83,7 +82,6 @@ export function SWRDevtools({
 
   const handleSelectedCacheItem = (key: string) => {
     setSelectedCacheKey(key);
-    console.log(cache.get(key));
     setSelectedCacheItemData(cache.get(key));
   };
 
