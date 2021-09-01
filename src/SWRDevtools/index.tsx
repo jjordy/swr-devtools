@@ -5,31 +5,19 @@ import Panel from "./Panel";
 import { ToolbarPositions, SWRDevtoolsProps } from "./types";
 import { usePrevious } from "./hooks";
 
-function filterErrors(keys: string[]) {
-  let errs = [];
-  try {
-    for (const item of keys) {
-      if (!item.includes("$err$")) {
-        errs.push(item);
-      }
+function filtered (keys: string[]) {
+  const errors = keys?.filter(key => key.includes('$err$'))
+  const inProgress = keys?.filter(key => key.includes('$req$'))
+  const rest = keys?.filter(key => {
+    if (key.includes('$err') || key.includes('$req$')) {
+      return false;
     }
-  } catch (err) {
-  } finally {
-    return errs;
-  }
-}
-
-function filterValidating(keys: string[]) {
-  let errs = [];
-  try {
-    for (const item of keys) {
-      if (!item.includes("$req$")) {
-        errs.push(item);
-      }
-    }
-  } catch (err) {
-  } finally {
-    return errs;
+    return true;
+  })
+  return {
+    errors,
+    inProgress,
+    rest
   }
 }
 
@@ -66,20 +54,19 @@ export function SWRDevtools({
     position
   );
   const prevPosition = usePrevious(toolbarPosition);
-  const [cacheKeys, setCacheKeys] = useState(
-    filterValidating(filterErrors(cache.keys()))
-  );
-
+  const [cacheKeys, setCacheKeys] = useState([]);
   const [selectedCacheItemData, setSelectedCacheItemData] = useState(null);
   const [selectedCacheKey, setSelectedCacheKey] = useState<string | null>(null);
   const handleToggleShow = () => toggleShow(!show);
 
   useEffect(() => toggleShow(defaultOpen), [defaultOpen]);
-
   useEffect(() => {
-    setCacheKeys(filterValidating(filterErrors(cache.keys())));
-  }, [cache]);
-
+    const t = [];
+    for (const i of cache.keys()) {
+      t.push(i);
+    }
+    setCacheKeys(filtered(t).rest);
+  }, [cache, setCacheKeys]);
   const handleSelectedCacheItem = (key: string) => {
     setSelectedCacheKey(key);
     setSelectedCacheItemData(cache.get(key));
@@ -92,6 +79,7 @@ export function SWRDevtools({
   const revalidate = (key: string) => {
     mutate(cache, key);
   };
+  console.log(cacheKeys)
   return (
     <>
       {!show && (
