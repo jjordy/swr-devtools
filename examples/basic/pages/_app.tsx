@@ -1,4 +1,4 @@
-import { useSWRConfig } from "swr";
+import { SWRConfig, useSWRConfig } from "swr";
 import SWRDevtools from "@jjordy/swr-devtools";
 
 export default function App({ Component, pageProps }) {
@@ -6,8 +6,10 @@ export default function App({ Component, pageProps }) {
   console.log(cache);
   return (
     <>
-      <Component {...pageProps} />
-      <SWRDevtools cache={cache} mutate={mutate} />
+      <SWRConfig value={{provider: () => new Map() }}>
+        <Component {...pageProps} />
+        <SWRDevtools cache={cache} mutate={mutate} />
+      </SWRConfig>
     </>
   );
 }

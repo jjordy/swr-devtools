@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@jjordy/swr-devtools": "^2.0.1",
+    "@jjordy/swr-devtools": "^2.0.2",
     "@types/node": "^16.7.10",
     "next": "11.1.0",
     "react": "17.0.2",

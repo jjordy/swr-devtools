@@ -4,6 +4,7 @@ import Keys from "./Keys";
 import Panel from "./Panel";
 import { ToolbarPositions, SWRDevtoolsProps } from "./types";
 import { usePrevious } from "./hooks";
+import { useSWRConfig } from "swr";
 
 function filtered (keys: string[]) {
   const errors = keys?.filter(key => key.includes('$err$'))
@@ -41,12 +42,11 @@ const DefaultOpenComponent = (
 export function SWRDevtools({
   debug = false,
   position = "right",
-  cache,
-  mutate,
   CustomOpenComponent,
   openBtnPosition = "left",
   defaultOpen = false,
 }: SWRDevtoolsProps) {
+  const { cache, mutate } = useSWRConfig();
   const [show, toggleShow] = useState(false);
   //@ts-ignore
   const ReactJson = useRef((props: any) => <></>);

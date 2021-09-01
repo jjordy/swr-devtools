@@ -1,6 +1,6 @@
 {
   "name": "@jjordy/swr-devtools",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Devtools for SWR",
   "private": false,
   "main": "./dist/index.js",
@@ -14,7 +14,7 @@
     "build": "rimraf esm && rimraf dist && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc --target ESNext --module ES6 --outDir esm",
     "build:cjs": "ncc build src/index.tsx -o dist -m -e react",
-    "dev": "npm run storybook",
+    "dev": "tsc --watch",
     "storybook": "start-storybook -p 9001",
     "watch": "tsc --watch"
   },
