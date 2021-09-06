@@ -40,7 +40,7 @@ Custom cache is required > 1.0 swr to re-implement subscribe behavior which swr 
 The SWRConfig with custom devtools cache should be above any request using swr.
 ```javascript
 import { SWRConfig } from "swr";
-import SWRDevtools, { Cache } from "../components";
+import SWRDevtools, { Cache } from "@jjordy/swr-devtools";
 
 export default function App({ Component, pageProps }) {
   return (
