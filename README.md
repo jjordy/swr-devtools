@@ -37,7 +37,7 @@ yarn add @jjordy/swr-devtools
 
 Import SWRDevtools and our custom devtools cache and use like below.
 Custom cache is required > 1.0 swr to re-implement subscribe behavior which swr devtools relys on.
-
+The SWRConfig with custom devtools cache should be above any request using swr.
 ```javascript
 import { SWRConfig } from "swr";
 import SWRDevtools, { Cache } from "../components";
