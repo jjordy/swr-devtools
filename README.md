@@ -35,33 +35,30 @@ yarn add @jjordy/swr-devtools
 
 **``swr - 1.0.0`` is required at minimum .**
 
-Import the devtools component and pass it your instance of the swr cache and mutate function.
-Dont worry about production if your ```NODE_ENV``` is not equal to development we will return an empty react fragment so nothing will be imported or rendered but your children.
+Import SWRDevtools and our custom devtools cache and use like below.
+Custom cache is required > 1.0 swr to re-implement subscribe behavior which swr devtools relys on.
 
 ```javascript
-  import SWRDevtools from '@jjordy/swr-devtools'
-  import { useSWRConfig } from 'swr'
+import { SWRConfig } from "swr";
+import SWRDevtools, { Cache } from "../components";
 
-  function MyApp () {
-    const { cache, mutate } = useSWRConfig()
-    return (
-      <>
-        <SWRDevtools cache={cache} mutate={mutate} />
-        <App />
-      </>
-    )
-  }
+export default function App({ Component, pageProps }) {
+  return (
+    <SWRConfig value={{provider: () => new Cache() }}>
+      <Component {...pageProps} />
+      <SWRDevtools />
+    </SWRConfig>
+  );
+}
 ```
 
 #### Props 
 
 
 | Name  | Type  | Required  | Default |
-|---|---|---|---|
-| cache  | `Cache`  | yes | 
+|---|---|---|---| 
 | CustomOpenComponent  | `React.ReactNode`  |  no |
 | debug | `boolean` | no |
-| mutate   | `Mutator`  | yes  |
 | position | `string`: `"right","left"` | no | right
 
 

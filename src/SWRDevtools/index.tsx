@@ -5,8 +5,9 @@ import Panel from "./Panel";
 import { ToolbarPositions, SWRDevtoolsProps } from "./types";
 import { usePrevious } from "./hooks";
 import { useSWRConfig } from "swr";
+import { useCallback } from "react";
 
-function filtered (keys: string[]) {
+function filtered (keys) {
   const errors = keys?.filter(key => key.includes('$err$'))
   const inProgress = keys?.filter(key => key.includes('$req$'))
   const rest = keys?.filter(key => {
@@ -47,6 +48,7 @@ export function SWRDevtools({
   defaultOpen = false,
 }: SWRDevtoolsProps) {
   const { cache, mutate } = useSWRConfig();
+  
   const [show, toggleShow] = useState(false);
   //@ts-ignore
   const ReactJson = useRef((props: any) => <></>);
@@ -54,19 +56,21 @@ export function SWRDevtools({
     position
   );
   const prevPosition = usePrevious(toolbarPosition);
-  const [cacheKeys, setCacheKeys] = useState([]);
+  console.log(cache)
+  const [cacheKeys, setCacheKeys] = useState(filtered(cache.keys()).rest);
   const [selectedCacheItemData, setSelectedCacheItemData] = useState(null);
   const [selectedCacheKey, setSelectedCacheKey] = useState<string | null>(null);
   const handleToggleShow = () => toggleShow(!show);
 
   useEffect(() => toggleShow(defaultOpen), [defaultOpen]);
-  useEffect(() => {
-    const t = [];
-    for (const i of cache.keys()) {
-      t.push(i);
-    }
-    setCacheKeys(filtered(t).rest);
-  }, [cache, setCacheKeys]);
+
+    const handleSetCacheKey = useCallback(() => {
+      setCacheKeys(filtered(cache.keys()).rest);
+      if (selectedCacheKey) {
+        setSelectedCacheItemData(cache.get(selectedCacheKey));
+      }
+    }, [selectedCacheKey]);
+  useEffect(() => cache.subscribe(handleSetCacheKey), [handleSetCacheKey]);
   const handleSelectedCacheItem = (key: string) => {
     setSelectedCacheKey(key);
     setSelectedCacheItemData(cache.get(key));
@@ -79,7 +83,7 @@ export function SWRDevtools({
   const revalidate = (key: string) => {
     mutate(cache, key);
   };
-  console.log(cacheKeys)
+
   return (
     <>
       {!show && (

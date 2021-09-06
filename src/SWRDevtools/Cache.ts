@@ -1,5 +1,5 @@
 
-export default class DevToolsCache<T> {
+export default class DevToolsCache {
   private __cache: Map<string, any>;
   private __listeners: any[];
   constructor(initialData: any = {}) {

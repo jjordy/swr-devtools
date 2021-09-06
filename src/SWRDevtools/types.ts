@@ -1,19 +1,14 @@
 import React from "react";
-import { Mutator } from "swr/dist/types";
 
 export type ToolbarPositions = "right" | "left" | "bottom" | "";
 
 export interface SWRDevtoolsProps {
-  /** The SWR Cache  */
-  cache: any;
   /** Custom open component to be rendered inside the open button */
   CustomOpenComponent?: React.ReactNode;
   /** This will print relavent position information to the console */
   debug?: boolean;
   /** Default the devtools to being open on render */
   defaultOpen?: boolean;
-  /** The SWR mutate function */
-  mutate: Mutator;
   /** The default position you would like the devtools to appear in. */
   position?: ToolbarPositions;
   /** Customize the position of the open button / component */

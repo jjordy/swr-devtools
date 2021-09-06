@@ -56,7 +56,7 @@ const Light: Theme = {
     position: "relative",
     height: "100%",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   keys: {
     backgroundColor: "#fff",

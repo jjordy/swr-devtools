@@ -31,3 +31,6 @@
   - Upgrade to SWR 1.0
   - Slightly change implementation to work with new cache from swr.
   - Upgrade dependencies
+
+## [2.0.4]
+  - Implement custom cache to bring back old subscribe functionality
