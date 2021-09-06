@@ -8,6 +8,6 @@ function fetcher (url) {
 export default function IndexPage () {
   const { data } = useSWR(`https://swapi.dev/api/people/1`, fetcher)
   return (
-    <div>{data?.name}</div>
+    <div>{data?.name}...</div>
   )
 }
