@@ -1,55 +1,51 @@
-import { useEffect, useState, useCallback } from "react";
-import { useWindowSize, useStore } from "../hooks";
+import { useState, useCallback } from "react";
+import { useWindowSize } from "../hooks";
 import { UsePanelStateProps } from "../types";
 
 const getX = (windowWidth, width) => {
-  const x = windowWidth / 2 - (width / 2);
-  return x
-}
+  const x = windowWidth / 2 - width / 2;
+  return x;
+};
 
 const getY = (windowHeight, height) => {
   let y = 0;
   if (typeof window !== "undefined") {
-    typeof window !== "undefined"
-      y = window.scrollY - windowHeight / 2 + (height / 2);
+    typeof window !== "undefined";
+    y = window.scrollY - windowHeight / 2 + height / 2;
   }
   return y;
-}
+};
 
 export default function usePanelState({ show }: UsePanelStateProps) {
-  const [theme, setTheme] = useState("Dark");
-  const { get, set, ready } = useStore({ store: "SWRDevtools" });
+  const [theme, setTheme] = useState(
+    localStorage.getItem("__SWR__DEVTOOLS__THEME__") || "Dark"
+  );
   const [resizing, setResizing] = useState(false);
   const { width: windowWidth, height: windowHeight } = useWindowSize();
   const [width, setWidth] = useState(1000);
   const [height, setHeight] = useState(800);
-  //@ts-ignore
-  const handleResize = useCallback(async (e: MouseEvent | TouchEvent, dir: any, refToElement: React.ElementRef<'div'>) => {
-    await set("width", refToElement.offsetWidth);
-    setWidth(refToElement.offsetWidth);
-    await set("height", refToElement.offsetHeight);
-    setHeight(refToElement.offsetHeight);
-    setResizing(false)
-  }, [ready, set, setResizing])
+
+  const handleResize = useCallback(
+    async (
+      //@ts-ignore
+      e: MouseEvent | TouchEvent,
+      //@ts-ignore
+      dir: any,
+      refToElement: React.ElementRef<"div">
+    ) => {
+      setWidth(refToElement.offsetWidth);
+      setHeight(refToElement.offsetHeight);
+      setResizing(false);
+    },
+    [setResizing, setWidth, setHeight]
+  );
   const handleChangeTheme = useCallback(
     async (theme) => {
-      await set("theme", theme);
+      localStorage.setItem("__SWR__DEVTOOLS__THEME__", theme);
       setTheme(theme);
     },
-    [set, show]
+    [show]
   );
-
-  useEffect(() => {
-    get("theme").then((theme) => {
-      if (theme) setTheme(theme);
-    });
-    get("width").then((width) => {
-      if (width) setWidth(width);
-    })
-    get("height").then(height => {
-      if (height) setHeight(height);
-    })
-  }, [ready]);
   return {
     theme,
     handleChangeTheme,
@@ -59,6 +55,6 @@ export default function usePanelState({ show }: UsePanelStateProps) {
     x: getX(windowWidth, width),
     y: getY(windowHeight, height),
     height,
-    width
+    width,
   };
 }

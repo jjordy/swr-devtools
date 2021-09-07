@@ -1,48 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { openDB } from "idb";
-
-export function useStore({ store = "default-db" }) {
-  const [db, setDb] = useState<any>(null);
-  useEffect(() => {
-    openDB(store, 1, {
-      upgrade(db) {
-        db.createObjectStore("settings");
-      },
-    }).then((db) => setDb(db));
-  }, []);
-
-  const get = useCallback(
-    async (key) => {
-      if (db !== null) {
-        try {
-          return (await db).get("settings", key);
-        } catch (err) {
-          console.log(err);
-        }
-      }
-      return null;
-    },
-    [db]
-  );
-  const set = useCallback(
-    async (key, values) => {
-      if (db !== null) {
-        try {
-          return (await db).put("settings", values, key);
-        } catch (err) {
-          console.log(err);
-        }
-      }
-      return null;
-    },
-    [db]
-  );
-  return {
-    set,
-    get,
-    ready: db ? true : false,
-  };
-}
+import React, { useEffect, useRef } from "react";
 
 const events = new Set<() => void>();
 const onResize = () => events.forEach((fn) => fn());

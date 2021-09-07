@@ -34,3 +34,5 @@
 
 ## [2.0.4]
   - Implement custom cache to bring back old subscribe functionality
+## [2.0.5]
+  - More fixes and remove indexdb approach store 1 theme value in localstorage instead.

@@ -6,19 +6,19 @@ export default class DevToolsCache {
     this.__cache = new Map(Object.entries(initialData));
     this.__listeners = [];
   }
-  set(key: string, value: any): any {
+  set(key: any, value: any): any {
     const [_key] = this.serializeKey(key);
     this.__cache.set(_key, value);
     this.notify();
   }
-  get(key: string) {
+  get(key: any) {
     const [_key] = this.serializeKey(key);
     return this.__cache.get(_key);
   }
   keys() {
     return Array.from(this.__cache.keys());
   }
-  // TODO: introduce namespace for the cache
+
   serializeKey(key: any): [string, any, string] {
     let args = null;
     if (typeof key === "function") {

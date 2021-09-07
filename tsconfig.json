@@ -12,6 +12,7 @@
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
+    "skipLibCheck": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "./dist",
@@ -26,5 +27,9 @@
   },
   "include": [
     "src/**/*"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "node_modules"
   ]
 }

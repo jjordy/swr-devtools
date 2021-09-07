@@ -8,19 +8,22 @@ import { useSWRConfig } from "swr";
 import { useCallback } from "react";
 
 function filtered (keys) {
-  const errors = keys?.filter(key => key.includes('$err$'))
-  const inProgress = keys?.filter(key => key.includes('$req$'))
-  const rest = keys?.filter(key => {
-    if (key.includes('$err') || key.includes('$req$')) {
-      return false;
-    }
-    return true;
-  })
-  return {
-    errors,
-    inProgress,
-    rest
+  if (keys) {
+    const errors = keys?.filter((key) => key.includes("$err$"));
+    const inProgress = keys?.filter((key) => key.includes("$req$"));
+    const rest = keys?.filter((key) => {
+      if (key.includes("$err") || key.includes("$req$")) {
+        return false;
+      }
+      return true;
+    });
+    return {
+      errors,
+      inProgress,
+      rest,
+    };
   }
+  return { errors: [], inProgress: [], rest: [] }
 }
 
 const DefaultOpenComponent = (
@@ -56,7 +59,6 @@ export function SWRDevtools({
     position
   );
   const prevPosition = usePrevious(toolbarPosition);
-  console.log(cache)
   const [cacheKeys, setCacheKeys] = useState(filtered(cache.keys()).rest);
   const [selectedCacheItemData, setSelectedCacheItemData] = useState(null);
   const [selectedCacheKey, setSelectedCacheKey] = useState<string | null>(null);
