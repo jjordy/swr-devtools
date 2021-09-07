@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useWindowSize } from "../hooks";
 import { UsePanelStateProps } from "../types";
 
@@ -17,14 +17,18 @@ const getY = (windowHeight, height) => {
 };
 
 export default function usePanelState({ show }: UsePanelStateProps) {
-  const [theme, setTheme] = useState(
-    localStorage.getItem("__SWR__DEVTOOLS__THEME__") || "Dark"
-  );
+  const [theme, setTheme] = useState("Dark");
   const [resizing, setResizing] = useState(false);
   const { width: windowWidth, height: windowHeight } = useWindowSize();
   const [width, setWidth] = useState(1000);
   const [height, setHeight] = useState(800);
 
+  useEffect(() => {
+    const existingSelectedTheme = localStorage.getItem("__SWR__DEVTOOLS__THEME__");
+    if (existingSelectedTheme) {
+      setTheme(existingSelectedTheme);
+    }
+  }, [])
   const handleResize = useCallback(
     async (
       //@ts-ignore

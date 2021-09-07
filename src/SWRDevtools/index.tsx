@@ -8,7 +8,7 @@ import { useSWRConfig } from "swr";
 import { useCallback } from "react";
 
 function filtered (keys) {
-  if (keys) {
+  if (Array.isArray(keys)) {
     const errors = keys?.filter((key) => key.includes("$err$"));
     const inProgress = keys?.filter((key) => key.includes("$req$"));
     const rest = keys?.filter((key) => {
@@ -22,8 +22,9 @@ function filtered (keys) {
       inProgress,
       rest,
     };
+  } else {
+    return { errors: [], inProgress: [], rest: [] };
   }
-  return { errors: [], inProgress: [], rest: [] }
 }
 
 const DefaultOpenComponent = (
@@ -50,8 +51,7 @@ export function SWRDevtools({
   openBtnPosition = "left",
   defaultOpen = false,
 }: SWRDevtoolsProps) {
-  const { cache, mutate } = useSWRConfig();
-  
+  const { cache, mutate } = useSWRConfig();  
   const [show, toggleShow] = useState(false);
   //@ts-ignore
   const ReactJson = useRef((props: any) => <></>);
