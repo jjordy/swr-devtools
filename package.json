@@ -1,6 +1,6 @@
 {
   "name": "@jjordy/swr-devtools",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Devtools for SWR",
   "private": false,
   "main": "./dist/index.js",
