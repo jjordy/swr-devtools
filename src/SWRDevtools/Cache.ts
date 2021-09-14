@@ -1,7 +1,7 @@
 
 export default class DevToolsCache {
-  private __cache: Map<string, any>;
-  private __listeners: any[];
+  __cache: Map<string, any>;
+  __listeners: any[];
   constructor(initialData: any = {}) {
     this.__cache = new Map(Object.entries(initialData));
     this.__listeners = [];
@@ -81,8 +81,8 @@ export default class DevToolsCache {
   }
 }
 
-export const UNDEFINED: undefined = ({} as any)[0];
-export const isFunction = (v: any): v is Function => typeof v === "function";
+const UNDEFINED: undefined = ({} as any)[0];
+const isFunction = (v: any): v is Function => typeof v === "function";
 // use WeakMap to store the object->key mapping
 // so the objects can be garbage collected.
 // WeakMap uses a hashtable under the hood, so the lookup

@@ -10,7 +10,6 @@ const getX = (windowWidth, width) => {
 const getY = (windowHeight, height) => {
   let y = 0;
   if (typeof window !== "undefined") {
-    typeof window !== "undefined";
     y = window.scrollY - windowHeight / 2 + height / 2;
   }
   return y;
