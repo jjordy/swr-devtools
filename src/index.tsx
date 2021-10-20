@@ -10,7 +10,9 @@ const inject = (c: Cache) =>
     if (isMetaCache(key)) {
       return;
     }
-    window.postMessage({ key, value });
+    if (typeof "window" !== undefined) {
+      window.postMessage({ key, value }, "*");
+    }
   });
 
 const devtools: Middleware = (useSWRNext) => (key, fn, config) => {

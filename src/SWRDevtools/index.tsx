@@ -33,6 +33,7 @@ export function SWRDevtoolsInternal({
     }
   };
   useEffect(() => {
+    console.log("Message listenered added for SWR - Devtools");
     window.addEventListener("message", handlePostMessage);
     return () => {
       window.removeEventListener("message", handlePostMessage);
