@@ -57,7 +57,7 @@ export default function Panel({
               <span
                 style={{
                   fontSize: 16,
-                  fontWeight: 900,
+                  fontWeight: 600,
                   userSelect: "none",
                 }}
               >

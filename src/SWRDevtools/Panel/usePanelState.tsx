@@ -10,7 +10,7 @@ const getX = (windowWidth, width) => {
 const getY = (windowHeight, height) => {
   let y = 0;
   if (typeof window !== "undefined") {
-    y = window.scrollY - windowHeight / 2 + height / 2;
+    y = window.scrollY - windowHeight / 2 + height / 2 + 300;
   }
   return y;
 };
@@ -19,8 +19,8 @@ export default function usePanelState({ show }: UsePanelStateProps) {
   const [theme, setTheme] = useState("Dark");
   const [resizing, setResizing] = useState(false);
   const { width: windowWidth, height: windowHeight } = useWindowSize();
-  const [width, setWidth] = useState(1000);
-  const [height, setHeight] = useState(800);
+  const [width, setWidth] = useState(800);
+  const [height, setHeight] = useState(400);
 
   useEffect(() => {
     const existingSelectedTheme = localStorage.getItem("__SWR__DEVTOOLS__THEME__");

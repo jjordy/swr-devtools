@@ -1,78 +1,45 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Data from "./Data";
 import Keys from "./Keys";
 import Panel from "./Panel";
 import { ToolbarPositions, SWRDevtoolsProps } from "./types";
 import { usePrevious } from "./hooks";
 import { useSWRConfig } from "swr";
-import { useCallback } from "react";
+import DefaultOpenComponent from "./DefaultOpenComponent";
 
-function filtered (keys) {
-  if (Array.isArray(keys)) {
-    const errors = keys?.filter((key) => key.includes("$err$"));
-    const inProgress = keys?.filter((key) => key.includes("$req$"));
-    const rest = keys?.filter((key) => {
-      if (key.includes("$err") || key.includes("$req$")) {
-        return false;
-      }
-      return true;
-    });
-    return {
-      errors,
-      inProgress,
-      rest,
-    };
-  } else {
-    return { errors: [], inProgress: [], rest: [] };
-  }
-}
-
-const DefaultOpenComponent = (
-  <span
-    aria-label="Open Devtools"
-    style={{
-      fontSize: 16,
-      boxSizing: "border-box",
-      borderTopRightRadius: "3px",
-      borderTopLeftRadius: "3px",
-      backgroundImage: "linear-gradient(90deg,#0f2027,#203a43,#2c5364)",
-      fontWeight: "bolder",
-      color: "#fff",
-    }}
-  >
-    <span style={{ padding: "1rem", fontSize: 12 }}>SWR DEVTOOLS</span>
-  </span>
-);
-
-export function SWRDevtools({
+export function SWRDevtoolsInternal({
   debug = false,
   position = "right",
   CustomOpenComponent,
   openBtnPosition = "left",
   defaultOpen = false,
 }: SWRDevtoolsProps) {
-  const { cache, mutate } = useSWRConfig();  
+  const [data, setData] = useState({});
+  const { cache, mutate } = useSWRConfig();
   const [show, toggleShow] = useState(false);
   //@ts-ignore
   const ReactJson = useRef((props: any) => <></>);
-  const [toolbarPosition, setToolbarPosition] = useState<ToolbarPositions>(
-    position
-  );
+  const [toolbarPosition, setToolbarPosition] =
+    useState<ToolbarPositions>(position);
   const prevPosition = usePrevious(toolbarPosition);
-  const [cacheKeys, setCacheKeys] = useState(filtered(cache.keys()).rest);
   const [selectedCacheItemData, setSelectedCacheItemData] = useState(null);
   const [selectedCacheKey, setSelectedCacheKey] = useState<string | null>(null);
   const handleToggleShow = () => toggleShow(!show);
-
+  const handlePostMessage = (event) => {
+    console.log(event);
+    if (event.data) {
+      const { key, value } = event.data;
+      setData({ ...data, [key]: value });
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("message", handlePostMessage);
+    return () => {
+      window.removeEventListener("message", handlePostMessage);
+    };
+  }, [handlePostMessage]);
   useEffect(() => toggleShow(defaultOpen), [defaultOpen]);
 
-    const handleSetCacheKey = useCallback(() => {
-      setCacheKeys(filtered(cache.keys()).rest);
-      if (selectedCacheKey) {
-        setSelectedCacheItemData(cache.get(selectedCacheKey));
-      }
-    }, [selectedCacheKey]);
-  useEffect(() => cache.subscribe(handleSetCacheKey), [handleSetCacheKey]);
   const handleSelectedCacheItem = (key: string) => {
     setSelectedCacheKey(key);
     setSelectedCacheItemData(cache.get(key));
@@ -82,10 +49,10 @@ export function SWRDevtools({
     cache.set(key, null);
   };
 
-  const revalidate = (key: string) => {
-    mutate(cache, key);
+  const revalidate = (_key: string) => {
+    mutate(_key).then((d) => setSelectedCacheItemData(d));
   };
-
+  const keys = useMemo(() => (data ? Object.keys(data) : []), [data]);
   return (
     <>
       {!show && (
@@ -93,13 +60,10 @@ export function SWRDevtools({
           style={{
             position: "fixed",
             boxSizing: "border-box",
-            boxShadow: "2px 2px 2px #222",
             bottom: 0,
             left: openBtnPosition === "left" ? 150 : null,
             right: openBtnPosition === "right" ? 150 : null,
             zIndex: 999999,
-            backgroundColor: "#222",
-            borderRadius: 6,
           }}
         >
           <button
@@ -109,8 +73,6 @@ export function SWRDevtools({
               border: 0,
               backgroundColor: "transparent",
               boxSizing: "border-box",
-              borderRadius: 6,
-              padding: 0,
             }}
           >
             {CustomOpenComponent || DefaultOpenComponent}
@@ -137,7 +99,7 @@ export function SWRDevtools({
             <div style={{ position: "relative", boxSizing: "border-box" }}>
               <Keys
                 theme={theme}
-                keys={cacheKeys}
+                keys={keys}
                 panelWidth={panelWidth}
                 selectedKey={selectedCacheKey}
                 onSelect={handleSelectedCacheItem}
@@ -161,4 +123,4 @@ export function SWRDevtools({
   );
 }
 
-export default SWRDevtools;
+export default SWRDevtoolsInternal;

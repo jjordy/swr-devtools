@@ -3,7 +3,6 @@ import { Themes, Theme } from "./types";
 const Dark: Theme = {
   header: {
     backgroundImage: "linear-gradient(90deg,#0f2027,#203a43,#2c5364)",
-    opacity: 0.8,
     display: "flex",
     justifyContent: "space-between",
     paddingTop: "1rem",
@@ -50,20 +49,21 @@ const Light: Theme = {
     paddingBottom: "1rem",
     paddingLeft: "1rem",
     paddingRight: "2rem",
-    alignItems: "center"
+    alignItems: "center",
   },
   container: {
     position: "relative",
-    height: "100%",
     display: "flex",
     flexDirection: "column",
+    // backgroundColor: "#222",
+    boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
   },
   keys: {
     backgroundColor: "#fff",
-    color: "#222"
+    color: "#222",
   },
   data: {
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   bottom: {
     opacity: 0.9,
@@ -75,8 +75,8 @@ const Light: Theme = {
     paddingLeft: "2rem",
     paddingBottom: "0.5rem",
     paddingTop: "0.5rem",
-    boxSizing: "border-box"
-  }
+    boxSizing: "border-box",
+  },
 };
 
 const themes: Themes = {

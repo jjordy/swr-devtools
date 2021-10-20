@@ -3,6 +3,7 @@ import React from "react";
 export type ToolbarPositions = "right" | "left" | "bottom" | "";
 
 export interface SWRDevtoolsProps {
+  children: React.ReactNode;
   /** Custom open component to be rendered inside the open button */
   CustomOpenComponent?: React.ReactNode;
   /** This will print relavent position information to the console */

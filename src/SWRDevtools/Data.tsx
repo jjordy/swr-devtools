@@ -1,11 +1,24 @@
 import React, { useEffect, memo } from "react";
-import themes from './themes';
+import themes from "./themes";
 import { DataProps } from "./types";
+
+const isPrimitive = (val) => {
+  if (val === null) {
+    console.log(true);
+    return true;
+  }
+
+  if (typeof val == "object" || typeof val == "function") {
+    return false;
+  } else {
+    return true;
+  }
+};
 
 export default memo(function Data({ JsonViewer, data, theme, resizing }: DataProps) {
   useEffect(() => {
     JsonViewer.current = require("react-json-view").default;
-  }, [])
+  }, []);
   return (
     <div style={{ position: "relative", backgroundColor: "#222" }}>
       <div
@@ -19,14 +32,16 @@ export default memo(function Data({ JsonViewer, data, theme, resizing }: DataPro
           ...themes[theme].data,
         }}
       >
-        {!resizing && <JsonViewer.current
-          collapsed={1}
-          displayDataTypes={false}
-          indentWidth={2}
-          src={resizing ? {} : data || {}}
-          theme={theme === "Dark" ? "tube" : "shapeshifter:inverted"}
-        />}
+        {!resizing && (
+          <JsonViewer.current
+            collapsed={1}
+            displayDataTypes={false}
+            indentWidth={2}
+            src={!resizing && isPrimitive(data) ? { data: data } : data}
+            theme={theme === "Dark" ? "tube" : "shapeshifter:inverted"}
+          />
+        )}
       </div>
     </div>
   );
-})
+});

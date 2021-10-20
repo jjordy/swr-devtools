@@ -42,7 +42,6 @@ export default function Keys({
             style={{
               width: "100%",
               boxSizing: "border-box",
-              backgroundColor: "#68E69EA3",
               padding: "0.5rem",
               fontSize: 14,
               fontWeight: 900,
