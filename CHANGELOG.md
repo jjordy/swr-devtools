@@ -41,3 +41,7 @@
 # [2.1.2]
   - Fixes middleware issues using post message. Clearing and mutating should work again as well.
   - Cleaned up UI.
+# [2.2.0]
+  - Add search bar to filter keys by query term.
+  - More UI Cleanup
+  - Cleanup placement logic for initial window try to support more screen sizes so the window doesnt appear half way off the screen.

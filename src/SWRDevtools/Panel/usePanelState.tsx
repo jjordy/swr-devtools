@@ -3,14 +3,17 @@ import { useWindowSize } from "../hooks";
 import { UsePanelStateProps } from "../types";
 
 const getX = (windowWidth, width) => {
-  const x = windowWidth / 2 - width / 2;
+  let x = 0;
+  if (typeof window !== "undefined") {
+    x = windowWidth / 2 - width / 2;
+  }
   return x;
 };
 
-const getY = (windowHeight, height) => {
+const getY = (windowHeight, _height) => {
   let y = 0;
   if (typeof window !== "undefined") {
-    y = window.scrollY - windowHeight / 2 + height / 2 + 300;
+    y = (windowHeight / 2) + window.scrollY - 200;
   }
   return y;
 };
