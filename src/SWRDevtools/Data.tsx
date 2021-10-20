@@ -4,7 +4,6 @@ import { DataProps } from "./types";
 
 const isPrimitive = (val) => {
   if (val === null) {
-    console.log(true);
     return true;
   }
 

@@ -26,14 +26,18 @@ export function SWRDevtoolsInternal({
   const [selectedCacheKey, setSelectedCacheKey] = useState<string | null>(null);
   const handleToggleShow = () => toggleShow(!show);
   const handlePostMessage = (event) => {
-    console.log(event);
+    if (debug) {
+      console.log(event)
+    }
     if (event.data) {
       const { key, value } = event.data;
       setData({ ...data, [key]: value });
     }
   };
   useEffect(() => {
-    console.log("Message listenered added for SWR - Devtools");
+    if (debug) {
+      console.log("Message listenered added for SWR - Devtools");
+    }
     window.addEventListener("message", handlePostMessage);
     return () => {
       window.removeEventListener("message", handlePostMessage);
