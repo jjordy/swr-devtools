@@ -1,4 +1,5 @@
 # Change Log
+
 ## [v0.2.27]
 
 ** Fixes **
@@ -36,3 +37,7 @@
   - Implement custom cache to bring back old subscribe functionality
 ## [2.0.6]
   - More fixes and remove indexdb approach store 1 theme value in localstorage instead.
+
+# [2.1.1]
+  - Fixes middleware issues using post message. Clearing and mutating should work again as well.
+  - Cleaned up UI.
